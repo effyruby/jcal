@@ -4,7 +4,8 @@ unit Unit2;
 
 interface
 
-uses SysUtils, CodeSiteLogging, Dialogs;
+uses SysUtils, CodeSiteLogging, Dialogs,
+     ALEPHBET, MILON;
 
 const
   YC1Digits: array[0..3] of string=
@@ -96,62 +97,36 @@ public
 
 end;
 
-
 const
-  SPACE=#$0020;
-  ALEPH=#$05D0;
-  BAIS=#$05D1;
-  GIMMEL=#$05D2;
-  DALED=#$05D3;
-  HEY=#$05D4;
-  VOV=#$05D5;
-  ZAYIN=#$05D6;
-  CHES=#$05D7;
-  TESS=#$05D8;
-  YUD=#$05D9;
-  ENDCHOF=#$05DA;
-  CHOF=#$05DB;
-  LAMED=#$05DC;
-  ENDMEM=#$05DD;
-  MEM=#$05DE;
-  ENDNUN=#$05DF;
-  NUN=#$05E0;
-  SAMECH=#$05E1;
-
-  KUF=#$05E7;
-  RAISH=#$05E8;
-  SHIN=#$05E9;
-  TOF=#$05EA;
-
   TRegularHebMonths: array[0..11] of string=(
-    TOF+SHIN+RAISH+YUD,  //Tishrei
-    CHES+SHIN+VOV+ENDNUN,  //Cheshvan
-    CHOF+SAMECH+LAMED+VOV,  //Kisleb
-    TESS+BAIS+TOF,  //TEVES
-    SHIN+BAIS+TESS,  //SHEVOT
-    ALEPH+DALED+RAISH, //Adar
-    NUN+YUD+SAMECH+ENDNUN, //Nissan
-    ALEPH+YUD+YUD+RAISH, //Iyar
-    SAMECH+YUD+VOV+ENDNUN, //Sivan
-    TOF+MEM+VOV+ZAYIN,  //Tammuz
-    ALEPH+BAIS,  //OV
-    ALEPH+LAMED+VOV+LAMED  //Elul
+    TISHREI,  //Tishrei
+    CHESVAN,  //Cheshvan
+    KISLEV,  //Kisleb
+    TEVES,  //TEVES
+    SHEVOT, //SHEVOT
+    ADAR, //Adar
+    NISSAN, //Nissan
+    IYAR, //Iyar
+    SIVAN, //Sivan
+    TAMMUZ, //Tammuz
+    OV,   //OV
+    ELUL  //Elul
     );
 
   TLeapHebMonths: array[0..12] of string=(
-    TOF+SHIN+RAISH+YUD,  //Tishrei
-    CHES+SHIN+VOV+ENDNUN,  //Cheshvan
-    CHOF+SAMECH+LAMED+VOV,  //Kisleb
-    TESS+BAIS+TOF,  //TEVES
-    SHIN+BAIS+TESS,  //SHEVOT
-    ALEPH+DALED+RAISH+SPACE+ALEPH, //Adar Aleph
-    ALEPH+DALED+RAISH+SPACE+BAIS, //Adar Baid
-    NUN+YUD+SAMECH+ENDNUN, //Nissan
-    ALEPH+YUD+YUD+RAISH, //Iyar
-    SAMECH+YUD+VOV+ENDNUN, //Sivan
-    TOF+MEM+VOV+ZAYIN,  //Tammuz
-    ALEPH+BAIS,  //OV
-    ALEPH+LAMED+VOV+LAMED  //Elul
+    TISHREI,  //Tishrei
+    CHESVAN,  //Cheshvan
+    KISLEV,  //Kisleb
+    TEVES,  //TEVES
+    SHEVOT, //SHEVOT
+    ADARALEPH, //Adar Aleph
+    ADARBAIS, //Adar Baid
+    NISSAN, //Nissan
+    IYAR, //Iyar
+    SIVAN, //Sivan
+    TAMMUZ, //Tammuz
+    OV, //OV
+    ELUL  //Elul
     );
 
   DaysOfWeek: array[0..6] of string=

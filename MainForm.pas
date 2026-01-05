@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, System.Generics.Collections,
   Controls, Forms, Vcl.Graphics, Dialogs, StdCtrls, CodeSiteLogging, ComCtrls, Vcl.Samples.Spin,
-  TntComCtrls;
+  TntComCtrls, ALEPHBET, MILON;
 
 const
   MAXYEARS=6000;
@@ -125,7 +125,7 @@ begin
     begin
       HebYear.HMonth:=k;
       Molad:=HebYear.CalcMolad;
-      Log(HebYear.HebMonthName(k), Molad.DHMPToString);
+      Log(H_MOLAD+SPACE+HebYear.HebMonthName(k), Molad.DHMPToString);
     end;
 //    ShowMessage(IntToStr(Molad.Hour));
 //    ShowMessage(IntToStr(HebYear.GetMinute(Molad)));
@@ -345,7 +345,7 @@ begin
   StartYear:=StrToInt(edtHebYear.Text);
   HebYear:=THebYear.Create;
   try
-    for k:=StartYear to StartYear+seNoOfYears1.Value do
+    for k:=StartYear to StartYear+seNoOfYears1.Value-1 do
     begin
       HebYear.HYear:=k;
       HebYear.HMonth:=1;
@@ -407,6 +407,10 @@ begin
   YC2Dict:=TDictionary<String, Integer>.Create;
   YC3Dict:=TDictionary<String, Integer>.Create;
   edtHebYear.Text:= IntToStr(3760+StrToInt(FormatDateTime('yyyy', Date)));
+
+  Button2.Caption:=H_MOLAD;
+  Button3.Caption:=H_ROSH_HASHONNOH;
+  Button7.Caption:=H_TEKUFAH;
 end;
 
 procedure TfrmMain.FormDestroy(Sender: TObject);

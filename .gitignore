@@ -2,6 +2,7 @@ Profiling/
 ModelSupport_WinPCVM/
 Types/.svn
 LibrarySupport/
+__history/
 
 *.bpg
 *.dcu

@@ -4,7 +4,7 @@ object frmMain: TfrmMain
   BorderStyle = bsDialog
   Caption = 'frmMain'
   ClientHeight = 494
-  ClientWidth = 839
+  ClientWidth = 904
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -41,7 +41,7 @@ object frmMain: TfrmMain
     Text = '0'
   end
   object Button1: TButton
-    Left = 245
+    Left = 323
     Top = 8
     Width = 75
     Height = 25
@@ -50,15 +50,15 @@ object frmMain: TfrmMain
     OnClick = Button1Click
   end
   object Edit2: TEdit
-    Left = 255
+    Left = 333
     Top = 315
-    Width = 74
+    Width = 55
     Height = 21
     TabOrder = 2
     Text = '1'
   end
   object Button2: TButton
-    Left = 245
+    Left = 319
     Top = 47
     Width = 106
     Height = 25
@@ -67,7 +67,7 @@ object frmMain: TfrmMain
     OnClick = Button2Click
   end
   object Button3: TButton
-    Left = 243
+    Left = 321
     Top = 78
     Width = 106
     Height = 25
@@ -76,9 +76,9 @@ object frmMain: TfrmMain
     OnClick = Button3Click
   end
   object ComboBoxEx1: TComboBoxEx
-    Left = 252
+    Left = 330
     Top = 345
-    Width = 98
+    Width = 72
     Height = 22
     ItemsEx = <
       item
@@ -105,7 +105,7 @@ object frmMain: TfrmMain
     StyleElements = [seFont, seBorder]
   end
   object Button5: TButton
-    Left = 245
+    Left = 323
     Top = 174
     Width = 106
     Height = 25
@@ -114,7 +114,7 @@ object frmMain: TfrmMain
     OnClick = Button5Click
   end
   object Button6: TButton
-    Left = 245
+    Left = 323
     Top = 205
     Width = 106
     Height = 25
@@ -123,7 +123,7 @@ object frmMain: TfrmMain
     OnClick = Button6Click
   end
   object seNoOfYears1: TSpinEdit
-    Left = 245
+    Left = 323
     Top = 146
     Width = 60
     Height = 22
@@ -133,7 +133,7 @@ object frmMain: TfrmMain
     Value = 25
   end
   object TntPageControl1: TTntPageControl
-    Left = 371
+    Left = 444
     Top = 17
     Width = 453
     Height = 425
@@ -213,7 +213,7 @@ object frmMain: TfrmMain
     end
   end
   object Button7: TButton
-    Left = 252
+    Left = 323
     Top = 266
     Width = 106
     Height = 25
@@ -221,7 +221,7 @@ object frmMain: TfrmMain
     OnClick = Button7Click
   end
   object Button8: TButton
-    Left = 245
+    Left = 323
     Top = 109
     Width = 106
     Height = 25
@@ -230,16 +230,16 @@ object frmMain: TfrmMain
     OnClick = Button8Click
   end
   object lvGeneral: TListView
-    Left = 15
-    Top = 64
-    Width = 222
+    Left = 8
+    Top = 65
+    Width = 305
     Height = 267
     Columns = <
       item
-        Width = 60
+        Width = 100
       end
       item
-        Width = 80
+        Width = 100
       end
       item
         Width = 60
@@ -250,9 +250,9 @@ object frmMain: TfrmMain
     ViewStyle = vsReport
   end
   object lvFiltered: TListView
-    Left = 15
-    Top = 338
-    Width = 222
+    Left = 8
+    Top = 341
+    Width = 305
     Height = 140
     Columns = <
       item
