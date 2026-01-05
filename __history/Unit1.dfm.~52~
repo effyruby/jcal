@@ -1,0 +1,252 @@
+object Form1: TForm1
+  Left = 47
+  Top = 115
+  Caption = 'Form1'
+  ClientHeight = 484
+  ClientWidth = 829
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object edtHebYear: TEdit
+    Left = 20
+    Top = 17
+    Width = 74
+    Height = 27
+    BiDiMode = bdLeftToRight
+    Font.Charset = HEBREW_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial Narrow'
+    Font.Style = [fsBold]
+    ParentBiDiMode = False
+    ParentFont = False
+    TabOrder = 0
+    Text = '0'
+  end
+  object Button1: TButton
+    Left = 224
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Button1'
+    TabOrder = 1
+    OnClick = Button1Click
+  end
+  object Edit2: TEdit
+    Left = 20
+    Top = 79
+    Width = 74
+    Height = 21
+    TabOrder = 2
+    Text = '0'
+  end
+  object Button2: TButton
+    Left = 224
+    Top = 47
+    Width = 75
+    Height = 25
+    Caption = 'Molad'
+    TabOrder = 3
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 224
+    Top = 78
+    Width = 75
+    Height = 25
+    Caption = 'New Year'
+    TabOrder = 4
+    OnClick = Button3Click
+  end
+  object Memo1: TMemo
+    Left = 20
+    Top = 106
+    Width = 185
+    Height = 89
+    Margins.Left = 500
+    Margins.Top = 500
+    Margins.Right = 50
+    Margins.Bottom = 50
+    BiDiMode = bdLeftToRight
+    Font.Charset = HEBREW_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentBiDiMode = False
+    ParentFont = False
+    TabOrder = 5
+  end
+  object Memo2: TMemo
+    Left = 20
+    Top = 202
+    Width = 185
+    Height = 89
+    Margins.Left = 500
+    Margins.Top = 500
+    Margins.Right = 50
+    Margins.Bottom = 50
+    BiDiMode = bdLeftToRight
+    Font.Charset = HEBREW_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentBiDiMode = False
+    ParentFont = False
+    TabOrder = 6
+  end
+  object ComboBoxEx1: TComboBoxEx
+    Left = 20
+    Top = 304
+    Width = 145
+    Height = 22
+    ItemsEx = <
+      item
+        Caption = 'Tishei'
+      end>
+    TabOrder = 7
+  end
+  object edtYearCode: TEdit
+    Left = 122
+    Top = 17
+    Width = 64
+    Height = 27
+    BiDiMode = bdLeftToRight
+    Color = clSilver
+    Font.Charset = HEBREW_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial Narrow'
+    Font.Style = [fsBold]
+    ParentBiDiMode = False
+    ParentFont = False
+    TabOrder = 8
+    Text = '0'
+    StyleElements = [seFont, seBorder]
+  end
+  object Button5: TButton
+    Left = 224
+    Top = 174
+    Width = 106
+    Height = 25
+    Caption = 'Go back X years'
+    TabOrder = 9
+    OnClick = Button5Click
+  end
+  object Button6: TButton
+    Left = 224
+    Top = 205
+    Width = 106
+    Height = 25
+    Caption = 'Go forwad  X years'
+    TabOrder = 10
+    OnClick = Button6Click
+  end
+  object seNoOfYears1: TSpinEdit
+    Left = 224
+    Top = 146
+    Width = 60
+    Height = 22
+    MaxValue = 0
+    MinValue = 0
+    TabOrder = 11
+    Value = 25
+  end
+  object TntPageControl1: TTntPageControl
+    Left = 336
+    Top = 17
+    Width = 453
+    Height = 425
+    ActivePage = TntTabSheet2
+    TabOrder = 12
+    object TntTabSheet1: TTntTabSheet
+      Caption = 'TntTabSheet1'
+    end
+    object TntTabSheet2: TTntTabSheet
+      Caption = 'TntTabSheet2'
+      object ListView1: TListView
+        Left = 3
+        Top = 15
+        Width = 220
+        Height = 321
+        Columns = <
+          item
+          end
+          item
+            Width = 80
+          end
+          item
+            Width = 80
+          end>
+        ReadOnly = True
+        RowSelect = True
+        TabOrder = 0
+        ViewStyle = vsReport
+      end
+      object ListView2: TListView
+        Left = 238
+        Top = 3
+        Width = 220
+        Height = 202
+        Columns = <
+          item
+          end
+          item
+            Width = 80
+          end
+          item
+            Width = 80
+          end>
+        ReadOnly = True
+        RowSelect = True
+        TabOrder = 1
+        ViewStyle = vsReport
+      end
+      object ListView3: TListView
+        Left = 229
+        Top = 230
+        Width = 220
+        Height = 106
+        Columns = <
+          item
+          end
+          item
+            Width = 80
+          end
+          item
+            Width = 80
+          end>
+        ReadOnly = True
+        RowSelect = True
+        TabOrder = 2
+        ViewStyle = vsReport
+      end
+      object Button4: TButton
+        Left = 3
+        Top = 342
+        Width = 220
+        Height = 25
+        Caption = 'Calculate frequency of 14 types of year'
+        TabOrder = 3
+        OnClick = Button4Click
+      end
+    end
+  end
+  object Button7: TButton
+    Left = 231
+    Top = 266
+    Width = 106
+    Height = 25
+    TabOrder = 13
+    OnClick = Button7Click
+  end
+end

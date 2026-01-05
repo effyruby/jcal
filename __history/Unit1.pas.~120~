@@ -1,0 +1,247 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, System.Generics.Collections,
+    Controls, Forms, Dialogs, StdCtrls, CodeSiteLogging, ComCtrls, Vcl.Samples.Spin;
+
+type
+  TForm1 = class(TForm)
+    edtHebYear: TEdit;
+    Button1: TButton;
+    Edit2: TEdit;
+    Button2: TButton;
+    Button3: TButton;
+    Memo1: TMemo;
+    Button4: TButton;
+    Memo2: TMemo;
+    ComboBoxEx1: TComboBoxEx;
+    edtYearCode: TEdit;
+    Button5: TButton;
+    Button6: TButton;
+    seNoOfYears1: TSpinEdit;
+    ListView1: TListView;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+    { Private declarations }
+    YearCodeDict: TDictionary<String, Integer>;
+    ErrorCount: Integer;
+    procedure InitDict;
+    procedure ScanNYears(ForwardDirection: Boolean);
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+uses Unit2;
+
+{$R *.DFM}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  s: String;
+  HebYear: THebYear;
+begin
+  s := 'Look '#$D840#$DC01'!';
+  ComboBoxEx1.Items.Add(s);
+  HebYear:=THebYear.Create;
+  try
+    HebYear.HYear:=StrToInt(edtHebYear.Text);
+    HebYear.CalcTekufa;
+    ShowMessage(MoladToStr(StrToInt(edtHebYear.Text), StrToInt(Edit2.Text)));
+  finally
+    HebYear.Free;
+  end;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  Molad: THebDate;
+  HebYear: THebYear;
+begin
+  HebYear:=THebYear.Create;
+  try
+    HebYear.HYear:=StrToInt(edtHebYear.Text);
+    HebYear.HMonth:=StrToInt(Edit2.Text);
+    Molad:=HebYear.CalcMolad;
+    Memo1.Lines.Add(Molad.DHPToString);
+    ShowMessage(IntToStr(Molad.Hour));
+    ShowMessage(IntToStr(HebYear.GetMinute(Molad)));
+    ShowMessage(IntToStr(HebYear.GetPart(Molad)));
+  finally
+    HebYear.Free;
+  end;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var
+  Molad: THebDate;
+  HebYear: THebYear;
+  SaveYearCode: String;
+begin
+  SaveYearCode:=edtYearCode.Text;
+  HebYear:=THebYear.Create;
+  try
+    HebYear.HYear:=StrToInt(edtHebYear.Text);
+    HebYear.HMonth:=1;
+    HebYear.CalcNextYearsNewYearsDay;
+    edtYearCode.Text:=HebYear.YearCode.ToString(HebYear.YearISLeapYear);
+  finally
+    HebYear.Free;
+  end;
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+var
+  Incidents, k: Integer;
+  Key, YearCode: String;
+  Percent: Single;
+  HebYear1, HebYear2: THebYear;
+  li: TListItem;
+begin
+  ErrorCount:=0;
+  Memo1.Lines.Clear;
+  InitDict;
+  for k:= 1 to 250 do
+  begin
+    codeSite.AddCheckPoint;
+    codeSite.Send('k', k);
+    Memo1.Lines.Add('year: '+IntToStr(k));
+    HebYear1:=THebYear.Create;
+    HebYear1.HYear:=k;
+    HebYear1.HMonth:=1;
+    HebYear1.CalcNextYearsNewYearsDay;
+
+    HebYear2:=THebYear.Create;
+    HebYear2.HYear:=k+1;
+    HebYear2.HMonth:=1;
+    HebYear2.CalcNewYearsDay;
+
+    if HebYear2.YearCode.NewYearOn<>HebYear1.NextYearsNewYearOn then
+    begin
+      Memo2.Lines.Add(HebYear1.Molad.DHPToString);
+      Memo2.Lines.Add(HebYear2.Molad.DHPToString);
+      Memo2.Lines.Add('');
+
+      Memo2.Lines.Add('Error: year: '+IntToStr(k)+'mof 19: '+IntToStr(k mod 19));
+      Memo2.Lines.Add('HebYear1: NYD: '+DaysOfWeek[Ord(HebYear1.YearCode.NewYearOn)]);
+      Memo2.Lines.Add('HebYear1: NY-NYD: '+DaysOfWeek[Ord(HebYear1.NextYearsNewYearOn)]);
+      Memo2.Lines.Add('HebYear2: NYDL '+DaysOfWeek[Ord(HebYear2.YearCode.NewYearOn)]);
+      Memo2.Lines.Add('HebYear1: '+IntToStr(HebYear1.DaysInYear));
+      Memo2.Lines.Add('HebYear1: '+IntToStr(HebYear1.DaysInYear mod 7));
+      Memo2.Lines.Add('HebYear2: '+DaysOfWeek[Ord(HebYear2.YearCode.NewYearOn)]);
+      Inc(ErrorCount);
+      Memo2.Lines.Add('HebYear2: '+IntToStr(ErrorCount));
+    end;
+
+    YearCode:=HebYear1.YearCode.ToString(HebYear1.YearISLeapYear);
+    if YearCodeDict.TryGetValue(YearCode, Incidents) then
+    begin
+      inc(Incidents);
+      YearCodeDict.AddOrSetValue(YearCode, Incidents);
+    end;
+  end;
+
+  CodeSite.AddSeparator;
+  for Key in YearCodeDict.Keys do
+  begin
+    Incidents:=YearCodeDict.Items[Key];
+    Percent:=Incidents/100;
+    li:=ListView1.Items.Add;
+    li.Caption:=Key;
+    li.subItems.Add(Incidents.ToString);
+    li.subItems.Add(Format ('%.2f', [Percent]));
+  end;
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  ScanNYears(False);
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+  ScanNYears(true);
+end;
+
+procedure TForm1.ScanNYears(ForwardDirection: Boolean);
+var
+  k: Integer;
+  Molad: THebDate;
+  HebYear: THebYear;
+  SaveYearCode: String;
+begin
+  Memo2.Lines.Clear;
+  SaveYearCode:=Trim(edtYearCode.Text);
+  HebYear:=THebYear.Create;
+  try
+  for k:=1 to seNoOfYears1.Value do
+  begin
+    if ForwardDirection then
+      HebYear.HYear:=StrToInt(edtHebYear.Text)+1
+    else
+      HebYear.HYear:=StrToInt(edtHebYear.Text)-1;
+    edtHebYear.Text:=IntToStr(HebYear.HYear);
+    HebYear.HMonth:=1;
+    HebYear.CalcNextYearsNewYearsDay;
+    if SaveYearCode.Trim.Length=2 then
+    begin
+      if copy(SaveYearCode,1,2)=Copy(HebYear.YearCode.ToString(HebYear.YearISLeapYear),1,2) then
+        Memo2.Lines.Add(HebYear.Hyear.ToString());
+    end
+    else
+    begin
+      if SaveYearCode=HebYear.YearCode.ToString(HebYear.YearISLeapYear) then
+        Memo2.Lines.Add(HebYear.Hyear.ToString());
+    end
+  end;
+  finally
+    HebYear.Free;
+  end;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Application.BiDiKeyboard:='0000040D';
+  YearCodeDict:=TDictionary<String, Integer>.Create;
+end;
+
+procedure TForm1.FormDestroy(Sender: TObject);
+begin
+  YearCodeDict.Free;
+end;
+
+procedure TForm1.InitDict;
+begin
+  YearCodeDict.Clear;
+  YearCodeDict.Add('2d3', 0);
+  YearCodeDict.Add('2a5', 0);
+  YearCodeDict.Add('3r5', 0);
+  YearCodeDict.Add('5r7', 0);
+  YearCodeDict.Add('5a1', 0);
+  YearCodeDict.Add('7d1', 0);
+  YearCodeDict.Add('7a3', 0);
+
+  YearCodeDict.Add('2D5', 0);
+  YearCodeDict.Add('2A7', 0);
+  YearCodeDict.Add('3R7', 0);
+  YearCodeDict.Add('5D1', 0);
+  YearCodeDict.Add('5A3', 0);
+  YearCodeDict.Add('7D3', 0);
+  YearCodeDict.Add('7A5', 0);
+end;
+
+end.
+

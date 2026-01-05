@@ -1,0 +1,244 @@
+unit Unit2;
+
+interface
+
+uses SysUtils;
+
+type THebDate=record
+  Day: Integer;
+  Hour: Integer;
+  Part: Integer;
+end;
+
+type TMonth=record
+  Month: String;
+  Days: 0..31;
+end;
+
+const
+  HebMonths: array[1..12] of TMonth=
+  ((Month: 'January'; Days: 31),
+   (Month: 'February'; Days: 28),
+   (Month: 'March'; Days: 31),
+   (Month: 'April'; Days: 30),
+   (Month: 'May'; Days: 31),
+   (Month: 'June'; Days: 30),
+   (Month: 'July'; Days: 31),
+   (Month: 'August'; Days: 31),
+   (Month: 'September'; Days: 30),
+   (Month: 'Octoner'; Days: 31),
+   (Month: 'November'; Days: 30),
+   (Month: 'December'; Days: 31));
+
+// Tekufa Constants
+//  BaseTekufa: THebDate=
+//   (Day: -12; Hour: -20; Part: -204);
+  OneTekufaCycle: THebDate=
+   (Day: 0; Hour: 1; Part: 485);
+  OneRegularTekufaCycle: THebDate=
+   (Day: 10; Hour: 21; Part: 204);
+  OneLeapTekufaCycle: THebDate=
+   (Day: 21; Hour: 9; Part: 491);
+
+// Molad Constants
+  OneCycle: THebDate=
+   (Day: 6939; Hour: 16; Part: 595);
+  RegularYear: THebDate=
+   (Day: 354; Hour: 8; Part: 876);
+  LeapYear: THebDate=
+   (Day: 383; Hour: 21; Part: 589);
+  BaseYear: THebDate=
+   (Day: 2; Hour: 5; Part: 204);
+  OneMonth: THebDate=
+   (Day: 1; Hour: 12; Part: 793);
+
+procedure Cycle(Hyear: Integer; var CycleCount, CycleYear: Integer);
+function IsHLeapYear(Hyear: Integer): boolean;
+function AddHebDates(HDate1, HDate2: THebDate; RoundToWeek: Boolean): THebDate;
+function MultHebDate(HDate1: THebDate; Factor: Integer; RoundToWeek: Boolean): THebDate;
+function InCycle(HDate: THebDate; RegularYears, LeapYears: Integer): THebDate;
+function Molad(HYear, HMonth: Integer): THebDate;
+function MoladToStr(HYear, HMonth: Integer): string;
+function CDoW(DayOfWeek: Integer): string;
+function Tekufa(HYear: Integer): THebDate;
+function SubBaseTekufa(HDate: THebDate; RoundToWeek: Boolean): THebDate;
+
+implementation
+
+function AddHebDates(HDate1, HDate2: THebDate; RoundToWeek: Boolean): THebDate;
+var
+  hc,dc:Integer;
+begin
+  result.Part:=HDate1.Part+HDate2.Part;
+  result.Hour:=HDate1.Hour+HDate2.Hour;
+  result.Day:=HDate1.Day+HDate2.Day;
+  hc:=result.Part div 1080;
+  result.Part:=result.Part mod 1080;
+
+  dc:=(result.Hour+hc) div 24;
+  result.Hour:=(result.Hour+hc) mod 24;
+
+  result.Day:=result.Day+dc;
+  if RoundToWeek then
+     result.Day:=result.Day Mod 7;
+end;
+
+function IsHLeapYear(Hyear: Integer): boolean;
+ var CycleCount, CycleYear: Integer;
+begin
+  result:=False;
+  Cycle(Hyear, CycleCount, CycleYear);
+  if CycleYear in [3,6,8,11,14,17,19] then
+     result:=True;
+end;
+
+procedure Cycle(Hyear: Integer; var CycleCount, CycleYear: Integer);
+begin
+  CycleCount:=Hyear div 19;
+  CycleYear:=Hyear mod 19;
+  if CycleYear=0 then
+  begin
+    dec(CycleCount);
+    CycleYear:=19;
+  end;
+end;
+
+function MultHebDate(HDate1: THebDate; Factor: Integer; RoundToWeek: Boolean): THebDate;
+var
+  temp, hc: Integer;
+begin
+  temp:=HDate1.Part*Factor;
+  result.Part:=temp mod 1080;
+  hc:=temp div 1080;
+  temp:=(HDate1.Hour*Factor)+hc;
+  result.Hour:=temp mod 24;
+  result.Day:=Factor*HDate1.Day+(temp div 24);
+  if RoundToWeek then
+    result.Day:=result.Day mod 7;
+end;
+
+function Tekufa(HYear: Integer): THebDate;
+var CycleCount, CycleYear: Integer;
+  tempHD: THebDate;
+begin
+  Cycle(Hyear, CycleCount, CycleYear);
+  tempHD:=MultHebDate(OneTekufaCycle, CycleCount, False);
+  tempHD:=SubBaseTekufa(tempHD, True);
+  case CycleYear-1 of
+   1:tempHD:=InCycle(tempHD, 1,0);
+   2:tempHD:=InCycle(tempHD, 2,0);
+   3:tempHD:=InCycle(tempHD, 2,1);
+   4:tempHD:=InCycle(tempHD, 3,1);
+   5:tempHD:=InCycle(tempHD, 4,1);
+   6:tempHD:=InCycle(tempHD, 4,2);
+   7:tempHD:=InCycle(tempHD, 5,2);
+   8:tempHD:=InCycle(tempHD, 5,3);
+   9:tempHD:=InCycle(tempHD, 6,3);
+  10:tempHD:=InCycle(tempHD, 7,3);
+  11:tempHD:=InCycle(tempHD, 7,4);
+  12:tempHD:=InCycle(tempHD, 8,4);
+  13:tempHD:=InCycle(tempHD, 9,4);
+  14:tempHD:=InCycle(tempHD, 9,5);
+  15:tempHD:=InCycle(tempHD,10,5);
+  16:tempHD:=InCycle(tempHD,11,5);
+  17:tempHD:=InCycle(tempHD,11,6);
+  18:tempHD:=InCycle(tempHD,12,6);
+//  19:tempHD:=InCycle(tempHD,12,7);
+  end;
+//  result:=AddHebDates(tempHD, MultHebDate(OneMonth, HMonth-1, True), True);
+end;
+
+function Molad(HYear, HMonth: Integer): THebDate;
+var CycleCount, CycleYear: Integer;
+  tempHD: THebDate;
+begin
+  Cycle(Hyear, CycleCount, CycleYear);
+  tempHD:=MultHebDate(OneCycle, CycleCount, True);
+  tempHD:=AddHebDates(tempHD, BaseYear, True);
+  case CycleYear-1 of
+   1:tempHD:=InCycle(tempHD, 1,0);
+   2:tempHD:=InCycle(tempHD, 2,0);
+   3:tempHD:=InCycle(tempHD, 2,1);
+   4:tempHD:=InCycle(tempHD, 3,1);
+   5:tempHD:=InCycle(tempHD, 4,1);
+   6:tempHD:=InCycle(tempHD, 4,2);
+   7:tempHD:=InCycle(tempHD, 5,2);
+   8:tempHD:=InCycle(tempHD, 5,3);
+   9:tempHD:=InCycle(tempHD, 6,3);
+  10:tempHD:=InCycle(tempHD, 7,3);
+  11:tempHD:=InCycle(tempHD, 7,4);
+  12:tempHD:=InCycle(tempHD, 8,4);
+  13:tempHD:=InCycle(tempHD, 9,4);
+  14:tempHD:=InCycle(tempHD, 9,5);
+  15:tempHD:=InCycle(tempHD,10,5);
+  16:tempHD:=InCycle(tempHD,11,5);
+  17:tempHD:=InCycle(tempHD,11,6);
+  18:tempHD:=InCycle(tempHD,12,6);
+//  19:tempHD:=InCycle(tempHD,12,7);
+  end;
+  result:=AddHebDates(tempHD, MultHebDate(OneMonth, HMonth-1, True), True);
+end;
+
+function MoladToStr(HYear, HMonth: Integer): string;
+var
+  tempHD: THebDate;
+  tempStr: string;
+begin
+  tempHD:=Molad(HYear, HMonth);
+
+  case tempHD.Hour+6 of
+  6..11:tempStr:=IntToStr(tempHD.Hour+6)+' pm';
+  12:tempStr:='12 am';
+  13..23:tempStr:=IntToStr(tempHD.Hour-6)+' am';
+//  24:tempStr:='12 pm';
+  else
+    tempStr:=IntToStr(tempHD.Hour-18)+' pm';
+  end;
+
+  result:=CDoW(tempHD.Day)+' '+
+    tempStr+' '+
+    IntToStr(tempHD.Part div  18)+' minutes '+
+    IntToStr(tempHD.Part Mod 18)+' part(s)';
+end;
+
+function InCycle(HDate: THebDate; RegularYears, LeapYears: Integer): THebDate;
+begin
+  result:=AddHebDates(HDate, MultHebDate(RegularYear,RegularYears, True), True);
+  result:=AddHebDates(result, MultHebDate(LeapYear,LeapYears, True), True);
+end;
+
+function CDoW(DayOfWeek: Integer): string;
+begin
+ case DayOfWeek of
+   0:result:='Saturday';
+   1:result:='Sunday';
+   2:result:='Monday';
+   3:result:='Tuesday';
+   4:result:='Wednesday';
+   5:result:='Thursday';
+   6:result:='Friday';
+  end;
+end;
+
+function SubBaseTekufa(HDate: THebDate; RoundToWeek: Boolean): THebDate;
+begin
+  HDate.Part:=HDate.Part-204;
+  if HDate.Part<0 then
+  begin
+    HDate.Part:=HDate.Part+1080;
+    HDate.Hour:=HDate.Hour-1;
+  end;
+  HDate.Hour:=HDate.Hour-20;
+  if HDate.Hour<0 then
+  begin
+    HDate.Hour:=HDate.Hour+24;
+    HDate.Day:=HDate.Day-1;
+  end;
+  HDate.Day:=HDate.Day-12;
+
+  if RoundToWeek then
+    HDate.Day:=HDate.Day mod 7;
+  result:=HDate;
+end;
+
+end.
