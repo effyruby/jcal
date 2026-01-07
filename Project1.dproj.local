@@ -3,9 +3,9 @@
 	<Transactions>
     <Transaction>2026/01/05 08:28:36.000.068,C:\PCVM\Dev-WC\Diary\MainForm.dfm=C:\PCVM\Dev-WC\Diary\Unit1.dfm</Transaction>
     <Transaction>2026/01/05 08:28:36.000.068,C:\PCVM\Dev-WC\Diary\MainForm.pas=C:\PCVM\Dev-WC\Diary\Unit1.pas</Transaction>
-    <Transaction>2026/01/05 19:13:50.346,=C:\PCVM\Dev-WC\Diary\Unit3.pas</Transaction>
-    <Transaction>2026/01/05 19:15:28.069,C:\PCVM\Dev-WC\Diary\AlephBet.pas=C:\PCVM\Dev-WC\Diary\Unit3.pas</Transaction>
-    <Transaction>2026/01/05 19:23:38.847,=C:\PCVM\Dev-WC\Diary\Unit3.pas</Transaction>
-    <Transaction>2026/01/05 19:23:52.219,C:\PCVM\Dev-WC\Diary\Milon.pas=C:\PCVM\Dev-WC\Diary\Unit3.pas</Transaction>
+    <Transaction>2026/01/05 19:13:50.000.346,=C:\PCVM\Dev-WC\Diary\Unit3.pas</Transaction>
+    <Transaction>2026/01/05 19:15:28.000.069,C:\PCVM\Dev-WC\Diary\AlephBet.pas=C:\PCVM\Dev-WC\Diary\Unit3.pas</Transaction>
+    <Transaction>2026/01/05 19:23:38.000.847,=C:\PCVM\Dev-WC\Diary\Unit3.pas</Transaction>
+    <Transaction>2026/01/05 19:23:52.000.219,C:\PCVM\Dev-WC\Diary\Milon.pas=C:\PCVM\Dev-WC\Diary\Unit3.pas</Transaction>
   </Transactions>
 </BorlandProject>

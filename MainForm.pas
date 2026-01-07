@@ -5,10 +5,10 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, System.Generics.Collections,
   Controls, Forms, Vcl.Graphics, Dialogs, StdCtrls, CodeSiteLogging, ComCtrls, Vcl.Samples.Spin,
-  TntComCtrls, ALEPHBET, MILON;
+  TntComCtrls, ALEPHBET, MILON, Unit2;
 
 const
-  MAXYEARS=6000;
+  MAXYEARS=100;
 
 type
   TfrmMain = class(TForm)
@@ -22,7 +22,7 @@ type
     edtYearCode: TEdit;
     Button5: TButton;
     Button6: TButton;
-    seNoOfYears1: TSpinEdit;
+    seNoOfYears: TSpinEdit;
     ListView1: TListView;
     ListView2: TListView;
     ListView3: TListView;
@@ -34,6 +34,8 @@ type
     Label1: TLabel;
     lvGeneral: TListView;
     lvFiltered: TListView;
+    tsLogging: TTntTabSheet;
+    Memo2: TMemo;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -58,14 +60,18 @@ type
     procedure Log(AText1, AText2, AText3: String); overload;
   public
     { Public declarations }
+    function CalTevesTekufah(TekufaYear: Integer): TTekufah;
+//    function CalNissanTekufah(TekufaYear: Integer): TTekufah;
+    function UpdateTekufah(Tekufah: TTekufah; ADays: Cardinal=91;
+       AHours: Cardinal=7; AMins: Cardinal=30): TTekufah;
+    procedure DisplayTekufah(HebMonrg: String; Tekufah: TTekufah);
+
   end;
 
 var
   frmMain: TfrmMain;
 
 implementation
-
-uses Unit2;
 
 {$R *.DFM}
 
@@ -92,7 +98,7 @@ var
   k: Integer;
   HebYear: THebYear;
 begin
-lvGeneral.Clear;
+  lvGeneral.Clear;
   lvFiltered.Clear;
 
   HebYear:=THebYear.Create;
@@ -171,101 +177,110 @@ begin
   ErrorCount:=0;
   lvGeneral.Clear;
   InitDict;
-  for k:= 1 to MAXYEARS do
-  begin
-    codeSite.AddCheckPoint;
-    codeSite.Send('k', k);
-    Log('year: '+IntToStr(k));
-    HebYear1:=THebYear.Create;
-    HebYear1.HYear:=k;
-    HebYear1.HMonth:=1;
-    HebYear1.CalcNextYearsNewYearsDay;
 
-    HebYear2:=THebYear.Create;
-    HebYear2.HYear:=k+1;
-    HebYear2.HMonth:=1;
-    HebYear2.CalcNewYearsDay;
-
-    if HebYear2.YearCode.NewYearOn<>HebYear1.NextYearsNewYearOn then
+  Button4.Enabled:=False;
+  try
+    for k:= 1 to MAXYEARS do
     begin
-//      Memo2.Lines.Add(HebYear1.Molad.DHPToString);
-//      Memo2.Lines.Add(HebYear2.Molad.DHPToString);
-//      Memo2.Lines.Add('');
-//
-//      Memo2.Lines.Add('Error: year: '+IntToStr(k)+'mof 19: '+IntToStr(k mod 19));
-//      Memo2.Lines.Add('HebYear1: NYD: '+DaysOfWeek[Ord(HebYear1.YearCode.NewYearOn)]);
-//      Memo2.Lines.Add('HebYear1: NY-NYD: '+DaysOfWeek[Ord(HebYear1.NextYearsNewYearOn)]);
-//      Memo2.Lines.Add('HebYear2: NYDL '+DaysOfWeek[Ord(HebYear2.YearCode.NewYearOn)]);
-//      Memo2.Lines.Add('HebYear1: '+IntToStr(HebYear1.DaysInYear));
-//      Memo2.Lines.Add('HebYear1: '+IntToStr(HebYear1.DaysInYear mod 7));
-//      Memo2.Lines.Add('HebYear2: '+DaysOfWeek[Ord(HebYear2.YearCode.NewYearOn)]);
-//      Inc(ErrorCount);
-//      Memo2.Lines.Add('HebYear2: '+IntToStr(ErrorCount));
+      codeSite.AddCheckPoint;
+      codeSite.Send('k', k);
+      Log('year: '+IntToStr(k));
+      HebYear1:=THebYear.Create;
+      HebYear1.HYear:=k;
+      HebYear1.HMonth:=1;
+      HebYear1.CalcNextYearsNewYearsDay;
+
+      HebYear2:=THebYear.Create;
+      HebYear2.HYear:=k+1;
+      HebYear2.HMonth:=1;
+      HebYear2.CalcNewYearsDay;
+
+      if HebYear2.YearCode.NewYearOn<>HebYear1.NextYearsNewYearOn then
+      begin
+        Memo2.Lines.Add(HebYear1.Molad.DHPToString);
+        Memo2.Lines.Add(HebYear2.Molad.DHPToString);
+        Memo2.Lines.Add('');
+
+        Memo2.Lines.Add('Error: year: '+IntToStr(k)+'mof 19: '+IntToStr(k mod 19));
+        Memo2.Lines.Add('HebYear1: NYD: '+DaysOfWeek[Ord(HebYear1.YearCode.NewYearOn)]);
+        Memo2.Lines.Add('HebYear1: NY-NYD: '+DaysOfWeek[Ord(HebYear1.NextYearsNewYearOn)]);
+        Memo2.Lines.Add('HebYear2: NYDL '+DaysOfWeek[Ord(HebYear2.YearCode.NewYearOn)]);
+        Memo2.Lines.Add('HebYear1: '+IntToStr(HebYear1.DaysInYear));
+        Memo2.Lines.Add('HebYear1: '+IntToStr(HebYear1.DaysInYear mod 7));
+        Memo2.Lines.Add('HebYear2: '+DaysOfWeek[Ord(HebYear2.YearCode.NewYearOn)]);
+        Inc(ErrorCount);
+        Memo2.Lines.Add('HebYear2: '+IntToStr(ErrorCount));
+        Application.ProcessMessages;
+      end;
+
+      YC3:=HebYear1.YearCode.ToString;
+      YC2:=LowerCase(Copy(YC3,1,2));
+      YC1:=Copy(YC3,1,1);
+      if YC3Dict.TryGetValue(YC3, Incidents) then
+      begin
+        inc(Incidents);
+        YC3Dict.AddOrSetValue(YC3, Incidents);
+      end
+      else
+        Beep;
+
+      if YC2Dict.TryGetValue(YC2, Incidents) then
+      begin
+        inc(Incidents);
+        YC2Dict.AddOrSetValue(YC2, Incidents);
+      end
+      else
+        Beep;
+
+      if YC1Dict.TryGetValue(YC1, Incidents) then
+      begin
+        inc(Incidents);
+        YC1Dict.AddOrSetValue(YC1, Incidents);
+      end
+      else
+        Beep;
+
     end;
 
-    YC3:=HebYear1.YearCode.ToString;
-    YC2:=LowerCase(Copy(YC3,1,2));
-    YC1:=Copy(YC3,1,1);
-    if YC3Dict.TryGetValue(YC3, Incidents) then
+    CodeSite.AddSeparator;
+    Application.ProcessMessages;
+    for k:=0 to Length(YC3Digits)-1 do
     begin
-      inc(Incidents);
-      YC3Dict.AddOrSetValue(YC3, Incidents);
-    end
-    else
-      Beep;
+      Key:=YC3Digits[k];
+      Incidents:=YC3Dict.Items[Key];
+      Percent:=100*Incidents/MAXYEARS;
+      li:=ListView1.Items.Add;
+      li.Caption:=Key;
+      li.subItems.Add(Incidents.ToString);
+      li.subItems.Add(Format ('%.2f', [Percent]));
+    end;
 
-    if YC2Dict.TryGetValue(YC2, Incidents) then
+    Application.ProcessMessages;
+    for k:=0 to Length(YC2Digits)-1 do
     begin
-      inc(Incidents);
-      YC2Dict.AddOrSetValue(YC2, Incidents);
-    end
-    else
-      Beep;
+      Key:=YC2Digits[k];
+      Incidents:=YC2Dict.Items[Key];
+      Percent:=100*Incidents/6000;
+      li:=ListView2.Items.Add;
+      li.Caption:=Key;
+      li.subItems.Add(Incidents.ToString);
+      li.subItems.Add(Format ('%.2f', [Percent]));
+    end;
 
-    if YC1Dict.TryGetValue(YC1, Incidents) then
+    Application.ProcessMessages;
+    for k:=0 to Length(YC1Digits)-1 do
     begin
-      inc(Incidents);
-      YC1Dict.AddOrSetValue(YC1, Incidents);
-    end
-    else
-      Beep;
-
+      Key:=YC1Digits[k];
+      Incidents:=YC1Dict.Items[Key];
+      Percent:=100*Incidents/6000;
+      li:=ListView3.Items.Add;
+      li.Caption:=Key;
+      li.subItems.Add(Incidents.ToString);
+      li.subItems.Add(Format ('%.2f', [Percent]));
+    end;
+  finally
+    Button4.Enabled:=True;
   end;
-
-  CodeSite.AddSeparator;
-  for k:=0 to Length(YC3Digits)-1 do
-  begin
-    Key:=YC3Digits[k];
-    Incidents:=YC3Dict.Items[Key];
-    Percent:=100*Incidents/MAXYEARS;
-    li:=ListView1.Items.Add;
-    li.Caption:=Key;
-    li.subItems.Add(Incidents.ToString);
-    li.subItems.Add(Format ('%.2f', [Percent]));
-  end;
-
-  for k:=0 to Length(YC2Digits)-1 do
-  begin
-    Key:=YC2Digits[k];
-    Incidents:=YC2Dict.Items[Key];
-    Percent:=100*Incidents/6000;
-    li:=ListView2.Items.Add;
-    li.Caption:=Key;
-    li.subItems.Add(Incidents.ToString);
-    li.subItems.Add(Format ('%.2f', [Percent]));
-  end;
-
-  for k:=0 to Length(YC1Digits)-1 do
-  begin
-    Key:=YC1Digits[k];
-    Incidents:=YC1Dict.Items[Key];
-    Percent:=100*Incidents/6000;
-    li:=ListView3.Items.Add;
-    li.Caption:=Key;
-    li.subItems.Add(Incidents.ToString);
-    li.subItems.Add(Format ('%.2f', [Percent]));
-  end;
-
 end;
 
 procedure TfrmMain.Button5Click(Sender: TObject);
@@ -278,61 +293,124 @@ begin
   ScanNYears(true);
 end;
 
+procedure TfrmMain.DisplayTekufah(HebMonrg: String; Tekufah: TTekufah);
+var
+  li: TListItem;
+begin
+  li:=lvGeneral.Items.Add;
+  li.Caption:=HebMonrg;
+  li.SubItems.Add(Tekufah.TekDow);
+  li.SubItems.Add(Tekufah.TekDateToString);
+  li.SubItems.Add(Tekufah.TekTime);
+end;
+
 procedure TfrmMain.Button7Click(Sender: TObject);
 var
-  s1: TDate;
- Hours, Days, NoOfYears, Tekufa, Mins: Integer;
- _Hours, StartHour: Integer;
- NewDate, StartDate: TDate;
+  k, YearOfInterest: Integer;
+  Tekufah: TTekufah;
 begin
-  Tekufa:=StrToInt(Edit2.Text);
-  case Tekufa  of
-  0:begin
-    Mins:=0;
-    Hours:=0;
-  end;
-  1:begin
-    Mins:=30;
-    Hours:=7;
-  end;
-  2:begin
-    Mins:=0;
-    Hours:=15;
-  end;
-  3:begin
-    Mins:=30;
-    Hours:=22;
-  end;
-  end;
+  lvGeneral.Clear;
+  lvFiltered.Clear;
 
-  NoOfYears:=StrToInt(edtHebYear.Text);
-  CodeSite.Send( 'NoOfYears', NoOfYears );
-  Hours:=NoOfYears*30+Hours;
-  CodeSite.Send( 'Hours', Hours );
-  _Hours:=Hours mod 24;
-  CodeSite.Send( '_Hours', _Hours );
-  Days:=Hours div 24;
-  CodeSite.Send( 'Days', Days );
-  Days:=Days mod 7;
-  CodeSite.Send( 'Days', Days );
-  CodeSite.Send( 'Mins', Mins );
-
-
-  S1:=EncodeDate(1905, 1, 6);
-  S1:=StrToDate('06/01/1995');
-//  DqyOfWeek(StartDate);
-  StartHour:=10;
-  NewDate:=StartDate+1;
-  Hours:=StartHour+6;
-  if Hours>24 then
+  for k:=0 to seNoOfYears.Value-1 do
   begin
-    Hours:=Hours-24;
-    NewDate:=NewDate+1;
+    YearOfInterest:=k+StrToInt(edtHebYear.Text);
+    Tekufah:=CalTevesTekufah(YearOfInterest);
+    DisplayTekufah(H_TEKUFAS+' '+TEVES, Tekufah);
+
+    Tekufah:=UpdateTekufah(Tekufah);
+    DisplayTekufah(H_TEKUFAS+' '+NISSAN, Tekufah);
+
+    Tekufah:=UpdateTekufah(Tekufah);
+    DisplayTekufah(H_TEKUFAS+' '+TAMMUZ, Tekufah);
+
+    Tekufah:=UpdateTekufah(Tekufah);
+    DisplayTekufah(H_TEKUFAS+' '+TISHREI, Tekufah);
+  end;
+end;
+
+function TfrmMain.CalTevesTekufah(TekufaYear: Integer): TTekufah;
+var
+  NoOfYears: Cardinal;
+  NewHours, NDays, NHours: Cardinal;
+ StartTekufah: TTekufah;
+begin
+  with StartTekufah do
+  begin
+    TekDate:=StrToDate('06/01/1905');
+    Hours:=10;
+    Minutes:=30;
   end;
 
-  Mins:=60;
-//  StartTime:=StrToTime(10:30);
+  with result do
+  begin
+    Minutes:=30;
+  end;
+
+  NoOfYears:=TekufaYear-1905;
+  CodeSite.Send( 'NoOfYears', NoOfYears );
+  NDays:=NoOfYears*365;
+  CodeSite.Send( 'NDays', NDays );
+  NHours:=NoOfYears*6;
+  CodeSite.Send( 'NHours', NHours );
+  NewHours:=NHours mod 24;
+  NDays:=NDays+(NHours div 24);
+  result.Days:=NDays;
+  result.Hours:=NewHours;
+
+  result.TekDate:=StartTekufah.TekDate+result.Days;
+  result.Hours:=result.Hours+StartTekufah.Hours;
+  result.DayOfWeek:=DayOfWeek(result.TekDate);
+
+  if result.Hours >24 then
+  begin
+    result.Hours:=result.Hours-24;
+    result.TekDate:=result.TekDate+1;
+    result.DayOfWeek:=DayOfWeek(result.TekDate);
+  end;
+  CodeSite.Send( 'data', result.TekTime);
 end;
+
+function TfrmMain.UpdateTekufah(Tekufah: TTekufah; ADays, AHours, AMins: Cardinal): TTekufah;
+begin
+  result:=Tekufah;
+  result.Days:=ADays;
+  result.Hours:=result.Hours+AHours;
+  result.Minutes:=result.Minutes+AMins;
+  if result.Minutes=60 then
+  begin
+    result.Minutes:=0;
+    result.Hours:=result.Hours+1;
+  end;
+  if result.Hours>24 then
+  begin
+    result.Hours:=result.Hours-24;
+    result.Days:=result.Days+1;
+  end;
+  result.TekDate:=result.TekDate+result.Days;
+end;
+
+
+//function TfrmMain.CalNissanTekufah(TekufaYear: Integer): TTekufah;
+//begin
+//  result:=CalTevesTekufah(TekufaYear);
+//  resut:=UpdateTekufah(91, 7,30);
+//  result.Days:=91;
+//  result.Hours:=result.Hours+7;
+//  result.Minutes:=result.Minutes+30;
+//  if result.Minutes=60 then
+//  begin
+//    result.Minutes:=0;
+//    result.Hours:=result.Hours+1;
+//  end;
+//  if result.Hours>24 then
+//  begin
+//    result.Hours:=result.Hours-24;
+//    result.Days:=result.Days+1;
+//  end;
+//  result.TekDate:=result.TekDate+result.Days;
+//end;
+
 
 procedure TfrmMain.Button8Click(Sender: TObject);
 var
@@ -345,7 +423,7 @@ begin
   StartYear:=StrToInt(edtHebYear.Text);
   HebYear:=THebYear.Create;
   try
-    for k:=StartYear to StartYear+seNoOfYears1.Value-1 do
+    for k:=StartYear to StartYear+seNoOfYears.Value-1 do
     begin
       HebYear.HYear:=k;
       HebYear.HMonth:=1;
@@ -375,7 +453,7 @@ begin
   SaveYearCode:=Trim(edtYearCode.Text);
   HebYear:=THebYear.Create;
   try
-  for k:=1 to seNoOfYears1.Value do
+  for k:=1 to seNoOfYears.Value do
   begin
     if ForwardDirection then
       HebYear.HYear:=StrToInt(edtHebYear.Text)+1
@@ -402,7 +480,7 @@ end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-  Application.BiDiKeyboard:='0000040D';
+//Application.BiDiKeyboard:='0000040D';
   YC1Dict:=TDictionary<String, Integer>.Create;
   YC2Dict:=TDictionary<String, Integer>.Create;
   YC3Dict:=TDictionary<String, Integer>.Create;

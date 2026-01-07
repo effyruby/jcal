@@ -22,6 +22,19 @@ type
   TNewYearDays=TDayOfWeek;
 
 type
+  TTekufah=record
+    TekDate: TDateTime;
+//  Hebdate: THebDate;
+    Days: cardinal;
+    DayOfWeek: Integer;
+    Hours: Integer;
+    Minutes: Integer;
+    function ToString: String;
+    function TekDateToString: String;
+    function TekDOW: String;
+    function TekTime: String;
+  end;
+
   TMolad=record
   Day: Cardinal;
   Hour: Integer;
@@ -46,7 +59,7 @@ end;
 type
   TMonth=record
     Month: String;
-    Days: 0..31;
+    Days: Integer; //0..31;
   end;
 
 type
@@ -942,6 +955,38 @@ begin
   wdThursday:result:=result+'"'+#1492;
   wdShabbos: result:=result+'"'+#1494;
   end;
+end;
+
+{ TTekufah }
+
+function TTekufah.TekDateToString: String;
+begin
+  result:=FormatDateTime('dd-MMM-yyyy', TekDate);
+end;
+
+function TTekufah.TekDOW: String;
+begin
+  result:=FormatDateTime('dddd', TekDate);
+end;
+
+function TTekufah.TekTime: String;
+var
+  _Hours: Integer;
+  AMPM: String;
+begin
+  _Hours:=Hours;
+  AMPM:='AM';
+  if Hours>12 then
+  begin
+    _Hours:=Hours-12;
+    AMPM:='PM';
+  end;
+  result:=Format('%.2d:%.2d %s', [_Hours, Minutes, AMPM]);
+end;
+
+function TTekufah.ToString: String;
+begin
+  result:=FormatDateTime('dddd dd-MMM-yyyy', TekDate)+' '+TekTime;
 end;
 
 end.

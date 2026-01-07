@@ -4,7 +4,7 @@ object frmMain: TfrmMain
   BorderStyle = bsDialog
   Caption = 'frmMain'
   ClientHeight = 494
-  ClientWidth = 904
+  ClientWidth = 1081
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -41,7 +41,7 @@ object frmMain: TfrmMain
     Text = '0'
   end
   object Button1: TButton
-    Left = 323
+    Left = 417
     Top = 8
     Width = 75
     Height = 25
@@ -50,7 +50,7 @@ object frmMain: TfrmMain
     OnClick = Button1Click
   end
   object Edit2: TEdit
-    Left = 333
+    Left = 427
     Top = 315
     Width = 55
     Height = 21
@@ -58,7 +58,7 @@ object frmMain: TfrmMain
     Text = '1'
   end
   object Button2: TButton
-    Left = 319
+    Left = 413
     Top = 47
     Width = 106
     Height = 25
@@ -67,7 +67,7 @@ object frmMain: TfrmMain
     OnClick = Button2Click
   end
   object Button3: TButton
-    Left = 321
+    Left = 415
     Top = 78
     Width = 106
     Height = 25
@@ -76,7 +76,7 @@ object frmMain: TfrmMain
     OnClick = Button3Click
   end
   object ComboBoxEx1: TComboBoxEx
-    Left = 330
+    Left = 424
     Top = 345
     Width = 72
     Height = 22
@@ -105,7 +105,7 @@ object frmMain: TfrmMain
     StyleElements = [seFont, seBorder]
   end
   object Button5: TButton
-    Left = 323
+    Left = 417
     Top = 174
     Width = 106
     Height = 25
@@ -114,7 +114,7 @@ object frmMain: TfrmMain
     OnClick = Button5Click
   end
   object Button6: TButton
-    Left = 323
+    Left = 417
     Top = 205
     Width = 106
     Height = 25
@@ -122,18 +122,18 @@ object frmMain: TfrmMain
     TabOrder = 8
     OnClick = Button6Click
   end
-  object seNoOfYears1: TSpinEdit
-    Left = 323
+  object seNoOfYears: TSpinEdit
+    Left = 417
     Top = 146
     Width = 60
     Height = 22
     MaxValue = 0
     MinValue = 0
     TabOrder = 9
-    Value = 25
+    Value = 5
   end
   object TntPageControl1: TTntPageControl
-    Left = 444
+    Left = 550
     Top = 17
     Width = 453
     Height = 425
@@ -148,7 +148,7 @@ object frmMain: TfrmMain
         Left = 3
         Top = 15
         Width = 220
-        Height = 321
+        Height = 379
         Columns = <
           item
           end
@@ -167,7 +167,7 @@ object frmMain: TfrmMain
         Left = 238
         Top = 3
         Width = 220
-        Height = 202
+        Height = 255
         Columns = <
           item
           end
@@ -183,10 +183,10 @@ object frmMain: TfrmMain
         ViewStyle = vsReport
       end
       object ListView3: TListView
-        Left = 229
-        Top = 230
+        Left = 238
+        Top = 273
         Width = 220
-        Height = 106
+        Height = 116
         Columns = <
           item
           end
@@ -201,27 +201,32 @@ object frmMain: TfrmMain
         TabOrder = 2
         ViewStyle = vsReport
       end
-      object Button4: TButton
-        Left = 3
-        Top = 358
-        Width = 220
-        Height = 25
-        Caption = 'Calculate frequency of 14 types of year'
-        TabOrder = 3
-        OnClick = Button4Click
+    end
+    object tsLogging: TTntTabSheet
+      Caption = 'tsLogging'
+      object Memo2: TMemo
+        Left = 0
+        Top = 0
+        Width = 445
+        Height = 397
+        Align = alClient
+        Lines.Strings = (
+          'Memo2')
+        TabOrder = 0
       end
     end
   end
   object Button7: TButton
-    Left = 323
+    Left = 417
     Top = 266
     Width = 106
     Height = 25
+    Caption = 'Tekufah'
     TabOrder = 11
     OnClick = Button7Click
   end
   object Button8: TButton
-    Left = 323
+    Left = 417
     Top = 109
     Width = 106
     Height = 25
@@ -231,18 +236,21 @@ object frmMain: TfrmMain
   end
   object lvGeneral: TListView
     Left = 8
-    Top = 65
-    Width = 305
+    Top = 66
+    Width = 374
     Height = 267
     Columns = <
       item
-        Width = 100
+        Width = 90
+      end
+      item
+        Width = 80
       end
       item
         Width = 100
       end
       item
-        Width = 60
+        Width = 80
       end>
     ReadOnly = True
     RowSelect = True
@@ -251,22 +259,25 @@ object frmMain: TfrmMain
   end
   object lvFiltered: TListView
     Left = 8
-    Top = 341
-    Width = 305
+    Top = 339
+    Width = 374
     Height = 140
     Columns = <
       item
-        Width = 60
-      end
-      item
-        Width = 80
-      end
-      item
-        Width = 60
+        Width = 280
       end>
     ReadOnly = True
     RowSelect = True
     TabOrder = 14
     ViewStyle = vsReport
+  end
+  object Button4: TButton
+    Left = 550
+    Top = 448
+    Width = 220
+    Height = 25
+    Caption = 'Calculate frequency of 14 types of year'
+    TabOrder = 15
+    OnClick = Button4Click
   end
 end
