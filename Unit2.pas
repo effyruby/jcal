@@ -9,7 +9,8 @@ uses SysUtils, CodeSiteLogging, Dialogs,
 
 const
   YC1Digits: array[0..3] of string=
-    ('2','3','5','7');
+    (BAIS,GIMEL,HEY,ZAYIN);
+//    ('2','3','5','7');
   YC2Digits: array[0..7] of string=
     ('2d','2a','3r','5d','5r','5a','7d','7a');
   YC3Digits: array[0..13] of string=
@@ -71,6 +72,15 @@ type
   End;
 
 type
+  THebDate=cLASS
+    Year: Cardinal;
+    Month: Cardinal;
+    Day: Cardinal;
+    function AddDays(NDays: Integer): THebDate;
+    function AddMonths(NMonths: Integer): THebDate;
+    function AddYears(NYears: Integer): THebDate;
+  end;
+
   THebYear=Class
   private
   FMonth:Integer;
@@ -937,23 +947,23 @@ end;
 function TYearCode.ToString: String;
 begin
   case NewYearOn of
-  wdMonday: result:=#1489;
-  wdTuesday: result:=#1490;
-  wdThursday: result:=#1492;
-  wdShabbos: result:=#1494;
+  wdMonday: result:=BAIS; //#1489;
+  wdTuesday: result:=GIMEL; //#1490;
+  wdThursday: result:=HEY; //#1492;
+  wdShabbos: result:=ZAYIN; //#1494;
   end;
 
   case YearCompleteness of
-  ycMissing: result:=result+#1495;
-  ycNormal:  result:=result+#1499;
-  ycFull:    result:=result+#1513;
+  ycMissing: result:=result+CHES; //#1495;
+  ycNormal:  result:=result+CHOF; //#1499;
+  ycFull:    result:=result+SHIN; //#1513;
   end;
 
   case PassoverOn of
-  wdSunday:  result:=result+'"'+#1488;
-  wdTuesday: result:=result+'"'+#1490;
-  wdThursday:result:=result+'"'+#1492;
-  wdShabbos: result:=result+'"'+#1494;
+  wdSunday:  result:=result+ALEPH; //#1488;
+  wdTuesday: result:=result+GIMEL; //#1490;
+  wdThursday:result:=result+HEY; //#1492;
+  wdShabbos: result:=result+ZAYIN; //#1494;
   end;
 end;
 
@@ -987,6 +997,23 @@ end;
 function TTekufah.ToString: String;
 begin
   result:=FormatDateTime('dddd dd-MMM-yyyy', TekDate)+' '+TekTime;
+end;
+
+{ THebDate }
+
+function THebDate.AddDays(NDays: Integer): THebDate;
+begin
+
+end;
+
+function THebDate.AddMonths(NMonths: Integer): THebDate;
+begin
+
+end;
+
+function THebDate.AddYears(NYears: Integer): THebDate;
+begin
+
 end;
 
 end.

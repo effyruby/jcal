@@ -23,6 +23,13 @@ object frmMain: TfrmMain
     Height = 13
     Caption = 'Hebrew Year'
   end
+  object Label2: TLabel
+    Left = 176
+    Top = 17
+    Width = 75
+    Height = 13
+    Caption = 'Year Code Filter'
+  end
   object edtHebYear: TEdit
     Left = 20
     Top = 33
@@ -40,30 +47,13 @@ object frmMain: TfrmMain
     TabOrder = 0
     Text = '0'
   end
-  object Button1: TButton
-    Left = 417
-    Top = 8
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
-    TabOrder = 1
-    OnClick = Button1Click
-  end
-  object Edit2: TEdit
-    Left = 427
-    Top = 315
-    Width = 55
-    Height = 21
-    TabOrder = 2
-    Text = '1'
-  end
   object Button2: TButton
     Left = 413
     Top = 47
     Width = 106
     Height = 25
     Caption = 'Molads this Yesr'
-    TabOrder = 3
+    TabOrder = 1
     OnClick = Button2Click
   end
   object Button3: TButton
@@ -72,24 +62,13 @@ object frmMain: TfrmMain
     Width = 106
     Height = 25
     Caption = 'New Year'
-    TabOrder = 4
+    TabOrder = 2
     OnClick = Button3Click
   end
-  object ComboBoxEx1: TComboBoxEx
-    Left = 424
-    Top = 345
-    Width = 72
-    Height = 22
-    ItemsEx = <
-      item
-        Caption = 'Tishei'
-      end>
-    TabOrder = 5
-  end
   object edtYearCode: TEdit
-    Left = 136
+    Left = 108
     Top = 33
-    Width = 69
+    Width = 53
     Height = 27
     BiDiMode = bdRightToLeft
     Color = clSilver
@@ -100,55 +79,57 @@ object frmMain: TfrmMain
     Font.Style = [fsBold]
     ParentBiDiMode = False
     ParentFont = False
-    TabOrder = 6
-    Text = '0'
+    TabOrder = 3
+    Text = '#1498'
     StyleElements = [seFont, seBorder]
   end
   object Button5: TButton
     Left = 417
-    Top = 174
+    Top = 242
     Width = 106
     Height = 25
     Caption = 'Go back X years'
-    TabOrder = 7
+    Enabled = False
+    TabOrder = 4
     OnClick = Button5Click
   end
   object Button6: TButton
     Left = 417
-    Top = 205
+    Top = 273
     Width = 106
     Height = 25
     Caption = 'Go forwad  X years'
-    TabOrder = 8
+    Enabled = False
+    TabOrder = 5
     OnClick = Button6Click
   end
   object seNoOfYears: TSpinEdit
-    Left = 417
-    Top = 146
-    Width = 60
+    Left = 498
+    Top = 168
+    Width = 43
     Height = 22
     MaxValue = 0
     MinValue = 0
-    TabOrder = 9
-    Value = 5
+    TabOrder = 6
+    Value = 25
   end
   object TntPageControl1: TTntPageControl
     Left = 550
     Top = 17
-    Width = 453
-    Height = 425
+    Width = 473
+    Height = 420
     ActivePage = TntTabSheet2
-    TabOrder = 10
+    TabOrder = 7
     object TntTabSheet1: TTntTabSheet
       Caption = 'TntTabSheet1'
     end
     object TntTabSheet2: TTntTabSheet
       Caption = 'TntTabSheet2'
       object ListView1: TListView
-        Left = 3
-        Top = 15
-        Width = 220
-        Height = 379
+        Left = 6
+        Top = 20
+        Width = 215
+        Height = 359
         Columns = <
           item
           end
@@ -164,10 +145,10 @@ object frmMain: TfrmMain
         ViewStyle = vsReport
       end
       object ListView2: TListView
-        Left = 238
-        Top = 3
+        Left = 230
+        Top = 20
         Width = 220
-        Height = 255
+        Height = 245
         Columns = <
           item
           end
@@ -183,10 +164,10 @@ object frmMain: TfrmMain
         ViewStyle = vsReport
       end
       object ListView3: TListView
-        Left = 238
+        Left = 230
         Top = 273
         Width = 220
-        Height = 116
+        Height = 106
         Columns = <
           item
           end
@@ -207,8 +188,8 @@ object frmMain: TfrmMain
       object Memo2: TMemo
         Left = 0
         Top = 0
-        Width = 445
-        Height = 397
+        Width = 465
+        Height = 392
         Align = alClient
         Lines.Strings = (
           'Memo2')
@@ -218,27 +199,27 @@ object frmMain: TfrmMain
   end
   object Button7: TButton
     Left = 417
-    Top = 266
+    Top = 110
     Width = 106
     Height = 25
     Caption = 'Tekufah'
-    TabOrder = 11
+    TabOrder = 8
     OnClick = Button7Click
   end
   object Button8: TButton
     Left = 417
-    Top = 109
-    Width = 106
+    Top = 166
+    Width = 76
     Height = 25
     Caption = 'Next N Years'
-    TabOrder = 12
+    TabOrder = 9
     OnClick = Button8Click
   end
   object lvGeneral: TListView
     Left = 8
     Top = 66
-    Width = 374
-    Height = 267
+    Width = 396
+    Height = 420
     Columns = <
       item
         Width = 90
@@ -254,30 +235,48 @@ object frmMain: TfrmMain
       end>
     ReadOnly = True
     RowSelect = True
-    TabOrder = 13
-    ViewStyle = vsReport
-  end
-  object lvFiltered: TListView
-    Left = 8
-    Top = 339
-    Width = 374
-    Height = 140
-    Columns = <
-      item
-        Width = 280
-      end>
-    ReadOnly = True
-    RowSelect = True
-    TabOrder = 14
+    TabOrder = 10
     ViewStyle = vsReport
   end
   object Button4: TButton
     Left = 550
-    Top = 448
-    Width = 220
+    Top = 461
+    Width = 469
     Height = 25
-    Caption = 'Calculate frequency of 14 types of year'
-    TabOrder = 15
+    Caption = 'Calculate frequency of 14 types of year (over 6000 years)'
+    TabOrder = 11
     OnClick = Button4Click
+  end
+  object pb: TProgressBar
+    Left = 550
+    Top = 440
+    Width = 469
+    Height = 17
+    Max = 6000
+    Step = 1
+    TabOrder = 12
+  end
+  object cboYCFilter: TComboBox
+    Left = 176
+    Top = 39
+    Width = 73
+    Height = 21
+    DropDownCount = 25
+    TabOrder = 13
+    Text = 'cboYCFilter'
+  end
+  object chkExcludeYC: TCheckBox
+    Left = 279
+    Top = 39
+    Width = 84
+    Height = 17
+    Caption = 'Exclude Code'
+    TabOrder = 14
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'ConnectionDef=SQKite_JCal')
+    Left = 32
+    Top = 120
   end
 end

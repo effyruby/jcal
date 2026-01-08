@@ -1,0 +1,19 @@
+program JCal;
+
+uses
+  Forms,
+  MainForm in 'MainForm.pas' {frmMain},
+  Unit2 in 'Unit2.pas',
+  Vcl.Themes,
+  Vcl.Styles,
+  AlephBet in 'AlephBet.pas',
+  Milon in 'Milon.pas';
+
+{$R *.RES}
+
+begin
+  Application.Initialize;
+  TStyleManager.TrySetStyle('Amakrits');
+  Application.CreateForm(TfrmMain, frmMain);
+  Application.Run;
+end.

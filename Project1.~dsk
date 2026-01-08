@@ -1,22 +1,27 @@
 ﻿[Closed Files]
 File_0=TSourceModule,'C:\PCVM\Dev-WC\Diary\AlephBet.pas',0,1,22,3,7,0,0,,
-File_1=TSourceModule,'C:\PCVM\Dev-WC\Diary\Milon.pas',0,1,13,47,26,0,0,,
-File_2=TSourceModule,'c:\program files (x86)\embarcadero\studio\16.0\SOURCE\RTL\SYS\System.pas',0,1,16031,26,16033,0,0,,
-File_3=TSourceModule,'C:\temp\Diary\Unit2.pas',0,1,1,11,1,0,0,,
-File_4=TSourceModule,'C:\temp\Diary\Unit1.pas',0,1,28,3,12,0,0,,
-File_5=TSourceModule,'c:\program files\borland\bds\4.0\source\Win32\rtl\sys\System.pas',0,1,23,1,23,0,0,,
+File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\16.0\SOURCE\RTL\SYS\System.pas',0,1,16031,26,16033,0,0,,
+File_2=TSourceModule,'C:\temp\Diary\Unit2.pas',0,1,1,11,1,0,0,,
+File_3=TSourceModule,'C:\temp\Diary\Unit1.pas',0,1,28,3,12,0,0,,
+File_4=TSourceModule,'c:\program files\borland\bds\4.0\source\Win32\rtl\sys\System.pas',0,1,23,1,23,0,0,,
 
 [Modules]
 Module0=C:\PCVM\Dev-WC\Diary\MainForm.pas
-Module1=C:\PCVM\Dev-WC\Diary\Unit2.pas
-Module2=C:\PCVM\Dev-WC\Diary\Project1.dproj
+Module1=C:\PCVM\Dev-WC\Diary\Milon.pas
+Module2=C:\PCVM\Dev-WC\Diary\Unit2.pas
 Module3=c:\program files (x86)\embarcadero\studio\16.0\SOURCE\RTL\SYS\System.SysUtils.pas
-Count=4
+Module4=C:\PCVM\Dev-WC\Diary\Project1.dproj
+Count=5
 EditWindowCount=1
 
 [C:\PCVM\Dev-WC\Diary\MainForm.pas]
 ModuleType=TSourceModule
 FormState=1
+FormOnTop=1
+
+[C:\PCVM\Dev-WC\Diary\Milon.pas]
+ModuleType=TSourceModule
+FormState=0
 FormOnTop=0
 
 [C:\PCVM\Dev-WC\Diary\Unit2.pas]
@@ -24,33 +29,34 @@ ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
-[C:\PCVM\Dev-WC\Diary\Project1.dproj]
-ModuleType=TBaseProject
-
 [c:\program files (x86)\embarcadero\studio\16.0\SOURCE\RTL\SYS\System.SysUtils.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
+[C:\PCVM\Dev-WC\Diary\Project1.dproj]
+ModuleType=TBaseProject
+
 [EditWindow0]
-ViewCount=4
+ViewCount=5
 CurrentEditView=C:\PCVM\Dev-WC\Diary\MainForm.pas
 View0=0
 View1=1
 View2=2
 View3=3
+View4=4
 PercentageSizes=1
 Create=1
 Visible=1
 Docked=0
 State=2
-Left=1688
-Top=1514
-Width=7242
+Left=1078
+Top=0
+Width=6523
 Height=8306
 MaxLeft=-62
 MaxTop=672
-MaxWidth=7242
+MaxWidth=6523
 MaxHeight=8306
 ClientWidth=10000
 ClientHeight=8389
@@ -62,16 +68,16 @@ LeftPanelClients=BorlandEditorCodeExplorer@EditWindow0
 LeftPanelData=0000080001000100000019000000426F726C616E64456469746F72436F64654578706C6F726572B20C00000000000000E601000000000000FFFFFFFF
 RightPanelSize=0
 BottomPanelSize=0
-BottomMiddlePanelSize=1472
+BottomMiddlePanelSize=1375
 BottomMiddlePanelClients=DockSite0,ToDo List,MessageView
-BottomMiddelPanelData=0000080001020200000009000000446F636B53697465300E000000546F446F4C69737457696E646F77724500000000000002C0050000000000000100000000724500000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomMiddelPanelData=0000080001020200000009000000446F636B53697465300E000000546F446F4C69737457696E646F777245000000000000025F050000000000000100000000724500000F0000004D65737361676556696577466F726DFFFFFFFF
 
 [View0]
 CustomEditViewType=TEditView
 Module=C:\PCVM\Dev-WC\Diary\Unit2.pas
-CursorX=48
-CursorY=977
-TopLine=975
+CursorX=1
+CursorY=984
+TopLine=974
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -80,15 +86,26 @@ EditViewName=C:\PCVM\Dev-WC\Diary\Unit2.pas
 [View1]
 CustomEditViewType=TEditView
 Module=C:\PCVM\Dev-WC\Diary\MainForm.pas
-CursorX=1
-CursorY=349
-TopLine=342
+CursorX=14
+CursorY=11
+TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\PCVM\Dev-WC\Diary\MainForm.pas
+EditViewName=Borland.FormDesignerView
 
 [View2]
+CustomEditViewType=TEditView
+Module=C:\PCVM\Dev-WC\Diary\Milon.pas
+CursorX=1
+CursorY=29
+TopLine=16
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\PCVM\Dev-WC\Diary\Milon.pas
+
+[View3]
 CustomEditViewType=TEditView
 Module=C:\PCVM\Dev-WC\Diary\Project1.dpr
 CursorX=1
@@ -99,12 +116,12 @@ Elisions=
 Bookmarks=
 EditViewName=C:\PCVM\Dev-WC\Diary\Project1.dpr
 
-[View3]
+[View4]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\16.0\SOURCE\RTL\SYS\System.SysUtils.pas
-CursorX=3
-CursorY=884
-TopLine=885
+CursorX=1
+CursorY=4410
+TopLine=4402
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -203,12 +220,12 @@ State=0
 Left=0
 Top=23
 Width=10000
-Height=1153
+Height=1056
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=10000
-ClientHeight=1153
-TBDockHeight=1153
+ClientHeight=1056
+TBDockHeight=1056
 LRDockWidth=3523
 Dockable=1
 StayOnTop=0
@@ -216,7 +233,7 @@ StayOnTop=0
 [ToolForm]
 PercentageSizes=1
 Create=1
-Visible=0
+Visible=1
 Docked=0
 State=0
 Left=8211
@@ -254,8 +271,8 @@ SplitPos=73
 
 [PropInspDesignerSelection]
 ArrangeBy=Name
-SelectedItem=Caption,
-ExpandedItems=Anchors=0,Constraints=0
+SelectedItem=,
+ExpandedItems=Anchors=0,BevelEdges=0,"LiveBindings Designer=0",Margins=0,Constraints=0,Font=0,LiveBindings=0,StyleElements=0,Touch=0
 
 [ModelViewTool]
 PercentageSizes=1
@@ -518,7 +535,7 @@ Visible=0
 Docked=1
 State=0
 Left=0
-Top=614
+Top=621
 Width=3672
 Height=1000
 MaxLeft=-1
@@ -610,12 +627,12 @@ Docked=0
 State=0
 Left=0
 Top=1500
-Width=1688
-Height=3389
+Width=1805
+Height=7222
 MaxLeft=-8
 MaxTop=-14
-ClientWidth=1562
-ClientHeight=2792
+ClientWidth=1680
+ClientHeight=6625
 TBDockHeight=3458
 LRDockWidth=1672
 Dockable=1
@@ -704,7 +721,7 @@ Dockable=1
 StayOnTop=0
 TabPosition=1
 ActiveTabID=RefactoringForm
-TabDockClients=RefactoringForm,FindReferencsForm,QAView,MetricsView
+TabDockClients=RefactoringForm,FindReferencsForm,MetricsView,QAView
 
 [DockSite1]
 DockSiteType=1
