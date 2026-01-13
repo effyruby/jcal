@@ -72,52 +72,62 @@ type
   End;
 
 type
+  THebYear=Class;
   THebDate=cLASS
+    HebYear: THebYear;
     Year: Cardinal;
     Month: Cardinal;
     Day: Cardinal;
+    IsValid: Boolean;
     function AddDays(NDays: Integer): THebDate;
     function AddMonths(NMonths: Integer): THebDate;
     function AddYears(NYears: Integer): THebDate;
+
+    Constructor Create(AYear, AMonth, ADay: Cardinal);
+    Destructor Destroy; Override;
+    function Validate: Boolean;
   end;
 
   THebYear=Class
   private
-  FMonth:Integer;
-  FYear: Integer;
-  NoOfCycles: Integer;
-//YearCompleteness: TYearCompleteness;
-  function CalCCycle: Boolean;
-  procedure NewYearsDay;
-  function IsLeapYear: boolean;
-  function InCycle(HDate: TDHP; RegularYears, LeapYears: Integer): TDHP;
-  procedure CurrentYearIsAfterLeapYear;
-  procedure CurrentYearIsBeforeLeapYear;
-  procedure CurrentYearIsBetweenLeapYears;
-  procedure CurrentYearIsLeapYear;
+    FMonth:Integer;
+    FYear: Integer;
+    NoOfCycles: Integer;
+  //YearCompleteness: TYearCompleteness;
+    function CalCCycle: Boolean;
+    procedure NewYearsDay;
+    function IsLeapYear: boolean;
+    function InCycle(HDate: TDHP; RegularYears, LeapYears: Integer): TDHP;
+    procedure CurrentYearIsAfterLeapYear;
+    procedure CurrentYearIsBeforeLeapYear;
+    procedure CurrentYearIsBetweenLeapYears;
+    procedure CurrentYearIsLeapYear;
 
-public
-  YearISLeapYear: Boolean;
-  MonthsInYear: Integer;
-  YearCode: TYearCode;
-  Molad: TDHP;
-  YearInCycle: Integer;
-//  NewYearOn: TNewYearDays;
-  NextYearsNewYearOn: TNewYearDays;
-  property HYear: Integer read FYear write FYear;
-  property HMonth: Integer read FMonth write FMonth;
-  function CalcMolad: TDHP;
-  function CalcTekufa: TDHP;
-  procedure CalcNewYearsDay;
-  procedure CalcNextYearsNewYearsDay;
-  function HebMonthName(Index: Integer): String;
+    public
+    DaysInMonth: TArray<Cardinal>;
+    YearISLeapYear: Boolean;
+    MonthsInYear: Integer;
+    YearCode: TYearCode;
+    Molad: TDHP;
+    YearInCycle: Integer;
+    NextYearsNewYearOn: TNewYearDays;
+    property HYear: Integer read FYear write FYear;
+    property HMonth: Integer read FMonth write FMonth;
+    function CalcMolad: TDHP;
+    function CalcTekufa: TDHP;
+    procedure CalcNewYearsDay;
+    procedure CalcNextYearsNewYearsDay;
+    function HebMonthName(Index: Integer): String;
 
-  function DaysInYear: Integer;
-  function AddDaysToDayOfWeek(DayOfWeek: TDayOfWeek; NoOfDays: Integer): TDayOfWeek;
+    function DaysInYear: Integer;
+    function AddDaysToDayOfWeek(DayOfWeek: TDayOfWeek; NoOfDays: Integer): TDayOfWeek;
 
-  class function GetMinute(HebDate: TDHP): Integer;
-  class function GetpART(HebDate: TDHP): Integer;
+    class function GetMinute(HebDate: TDHP): Integer;
+    class function GetpART(HebDate: TDHP): Integer;
 
+    function CalcDaysInMonth: TArray<Cardinal>;
+    procedure BasicMonthLengths(var Months: TArray<Cardinal>);
+    procedure ModifyForLeapYear(var Months: TArray<Cardinal>);
 end;
 
 const
@@ -271,6 +281,7 @@ begin
 //
    19:CurrentYearIsLeapYear;
   end;
+  DaysInMonth:=CalcDaysInMonth;
   {$IFDEF CS2}CodeSite.ExitMethod( Self, 'NewYearsDay' );{$ENDIF}
 end;
 
@@ -634,7 +645,8 @@ end;
 //Cycle Years 3,6,8,11,14,17,19
 procedure THebYear.CurrentYearIsLeapYear;
 begin
-  {$IFDEF CS2}CodeSite.EnterMethod( Self, 'CurrentYearIsLeapYear' );{$ENDIF}
+try
+  CodeSite.EnterMethod( Self, 'CurrentYearIsLeapYear' );
   MonthsInYear:=13;
   case TDayOfWeek(Molad.Day )of
   wdSunday:
@@ -714,9 +726,11 @@ begin
     end;
   end;
   end;
+finally
   CodeSite.SendEnum('NewYearOn', TypeInfo(TNewYearDays), Ord(YearCode.NewYearOn));
   CodeSite.SendEnum('YearCompleteness', TypeInfo(TYearCompleteness), Ord(YearCode.YearCompleteness));
-  {$IFDEF CS2}CodeSite.ExitMethod( Self, 'CurrentYearIsLeapYear' );{$ENDIF}
+  CodeSite.ExitMethod( Self, 'CurrentYearIsLeapYear' );
+end;
 end;
 
 class function THebYear.GetMinute(HebDate: TDHP): Integer;
@@ -735,6 +749,7 @@ end;
 
 function THebYear.CalcMolad: TDHP;
 begin
+try
   {$IFDEF CS2}CodeSite.EnterMethod( Self, 'CalcMolad' );{$ENDIF}
   CalcCycle;
   Molad:=MultHebDate(OneCycle, NoOfCycles, True);
@@ -767,8 +782,9 @@ begin
   CodeSite.Send('Molad.Hour:', result.Hour);
   CodeSite.Send('Molad.Part:', result.Part);
 
-
-  {$IFDEF CS2}CodeSite.ExitMethod( Self, 'CalcMolad' );{$ENDIF}
+finally
+  CodeSite.ExitMethod( Self, 'CalcMolad' );
+end;
 end;
 
 procedure THebYear.CalcNewYearsDay;
@@ -782,8 +798,9 @@ end;
 procedure THebYear.CalcNextYearsNewYearsDay;
 begin
   {$IFDEF CS2}CodeSite.EnterMethod( Self, 'CalcNextYearsNewYearsDay' );{$ENDIF}
-  CalcMolad;
-  NewYearsDay;
+  CalcNewYearsDay;
+//  CalcMolad;
+//  NewYearsDay;
   NextYearsNewYearOn:=AddDaysToDayOfWeek(YearCode.NewYearOn, DaysInYear);
   YearCode.PassoverOn:=AddDaysToDayOfWeek(YearCode.NewYearOn, DaysInYear-2);
   {$IFDEF CS2}CodeSite.ExitMethod( Self, 'CalcNextYearsNewYearsDay' );{$ENDIF}
@@ -1007,13 +1024,124 @@ begin
 end;
 
 function THebDate.AddMonths(NMonths: Integer): THebDate;
+var
+  _Year, _Month, _Day: Integer;
 begin
-
+  //Limit to 12 monrhs
+  _Day:=Day;
+  _Month:=Month+NMonths;
+  _Year:=Year;
+  if _Month>HebYear.MonthsInYear then
+  begin
+    _Month:=_Month mod HebYear.MonthsInYear;
+    _Year:=_Year+1;
+  end;
+  result:=THebDate.Create(_Year, _Month, _Day);
 end;
 
 function THebDate.AddYears(NYears: Integer): THebDate;
+var
+  _Year, _Month, _Day: Integer;
 begin
+  _Day:=Day;
+  _Month:=Month;
+  _Year:=Year+NYears;
+  result:=THebDate.Create(_Year, _Month, _Day);
+end;
 
+constructor THebDate.Create(AYear, AMonth, ADay: Cardinal);
+begin
+  IsValid:=False;
+  Year:=AYear;
+  Month:=AMonth;
+  Day:=ADay;
+
+  HebYear:=THebYear.Create;
+  HebYear.HYear:=AYear;
+  HebYear.HMonth:=1;
+//HebYear.CalcNewYearsDay;
+  HebYear.CalcNextYearsNewYearsDay;
+  Validate
+end;
+
+destructor THebDate.Destroy;
+begin
+  HebYear.Free;
+  inherited;
+end;
+
+function THebDate.Validate: Boolean;
+begin
+  CodeSite.Send( 'Month', Month );
+  CodeSite.Send( 'Day', Day );
+  CodeSite.Send( 'Days in month', HebYear.DaysInMonth[Month-1] );
+
+  IsValid:=False;
+  //if Month is 13 and not a leap year then INVALID
+  if (Month<1) or (Month>HebYear.MonthsInYear) then
+    Exit;
+
+  if (Day<1) or (Day>30) or (Day>HebYear.DaysInMonth[Month-1]) then
+    Exit;
+ IsValid:=True;
+ result:=IsValid;
+end;
+
+procedure THebYear.BasicMonthLengths(var Months: TArray<Cardinal>);
+begin
+  MonthsInYear:=12;
+  SetLength(Months, MonthsInYear);
+  Months[0]:=30; //Tishrei
+  Months[1]:=29;//Cheshvan
+  Months[2]:=30; //Kisleb
+  Months[3]:=29; //Teves
+  Months[4]:=30; //SHevat
+  Months[5]:=29; //Adar
+  Months[6]:=30; //Nissan
+  Months[7]:=29; //Iyar
+  Months[8]:=30; //Sivan
+  Months[9]:=29; //Tammuz
+  Months[10]:=30;//Ov
+  Months[11]:=29;//Elil
+end;
+
+procedure THebYear.ModifyForLeapYear(var Months: TArray<Cardinal>);
+begin
+  MonthsInYear:=13;
+  SetLength(Months, MonthsInYear);
+  Months[5]:=30; //Adar Aleph
+  Months[6]:=29; //Adar Bais
+  Months[7]:=30; //Nissan
+  Months[8]:=29; //Iyar
+  Months[9]:=30; //Sivan
+  Months[10]:=29; //Tammuz
+  Months[11]:=30;//Ov
+  Months[12]:=29;//Elil
+end;
+
+function THebYear.CalcDaysInMonth: TArray<Cardinal>;
+begin
+   BasicMonthLengths(result);
+   case DaysInYear of
+   353:  //Kislev Missing
+     result[2]:=29; //Kislev Missing
+   354:; //All Good
+   355:
+     result[1]:=30; //Cheshvam Extra
+   383:  //Kislev Missing Lrap Uear
+   begin
+     result[2]:=29; //Kislev Missinf Leap Year
+     ModifyForLeapYear(result);
+   end;
+   384:  //Leap Year
+     ModifyForLeapYear(result);
+   385:  //Cheshvan Extra Leap Year
+   begin
+     result[1]:=30;
+     ModifyForLeapYear(result);
+   end;
+
+   end;
 end;
 
 end.

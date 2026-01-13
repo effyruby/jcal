@@ -557,50 +557,30 @@ begin
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
+var
+  HebDate, NewHenDate: THebDate;
 begin
-//Application.BiDiKeyboard:='0000040D';
-  YC1Dict:=TDictionary<String, Integer>.Create;
-  YC2Dict:=TDictionary<String, Integer>.Create;
-  YC3Dict:=TDictionary<String, Integer>.Create;
-  edtHebYear.Text:= IntToStr(3760+StrToInt(FormatDateTime('yyyy', Date)));
+  HebDate:=THebDate.Create(5785,11,29);
+  NewHenDate:=HebDate.AddMonths(1);
+  if NewHenDate.IsValid then
+    Beep;
+  NewHenDate:=HebDate.AddMonths(2);
+  if NewHenDate.IsValid then
+    Beep;
+  NewHenDate:=HebDate.AddMonths(3);
+  if NewHenDate.IsValid then
+    Beep;
 
-  Button2.Caption:=H_MOLAD;
-  Button3.Caption:=H_ROSH_HASHONNOH;
-  Button7.Caption:=H_TEKUFAH;
+  NewHenDate:=HebDate.AddYears(2);
+  NewHenDate:=NewHenDate.AddMonths(3);
+  if NewHenDate.IsValid then
+    Beep;
 
-  cboYCFilter.Items.Add('');
-  //YC-1
-  cboYCFilter.Items.Add(BAIS);
-  cboYCFilter.Items.Add(GIMEL);
-  cboYCFilter.Items.Add(HEY);
-  cboYCFilter.Items.Add(ZAYIN);
+  NewHenDate:=HebDate.AddYears(3);
+  NewHenDate:=NewHenDate.AddMonths(3);
+  if NewHenDate.IsValid then
+    Beep;
 
-  //TC-2
-  cboYCFilter.Items.Add(BAIS+CHES);
-  cboYCFilter.Items.Add(BAIS+SHIN);
-  cboYCFilter.Items.Add(GIMEL+CHOF);
-  cboYCFilter.Items.Add(HEY+CHES);
-  cboYCFilter.Items.Add(HEY+CHOF);
-  cboYCFilter.Items.Add(HEY+SHIN);
-  cboYCFilter.Items.Add(ZAYIN+CHES);
-  cboYCFilter.Items.Add(ZAYIN+SHIN);
-
-  //TC-3
-  cboYCFilter.Items.Add(BAIS+CHES+GIMEL);
-  cboYCFilter.Items.Add(BAIS+CHES+HEY);
-  cboYCFilter.Items.Add(BAIS+SHIN+HEY);
-  cboYCFilter.Items.Add(BAIS+SHIN+ZAYIN);
-  cboYCFilter.Items.Add(GIMEL+CHOF+HEY);
-  cboYCFilter.Items.Add(GIMEL+CHOF+ZAYIN);
-  cboYCFilter.Items.Add(HEY+CHES+ALEPH);
-  cboYCFilter.Items.Add(HEY+CHOF+ZAYIN);
-  cboYCFilter.Items.Add(HEY+SHIN+ALEPH);
-  cboYCFilter.Items.Add(HEY+SHIN+GIMEL);
-  cboYCFilter.Items.Add(ZAYIN+CHES+ALEPH);
-  cboYCFilter.Items.Add(ZAYIN+CHES+GIMEL);
-  cboYCFilter.Items.Add(ZAYIN+SHIN+GIMEL);
-  cboYCFilter.Items.Add(ZAYIN+SHIN+HEY);
-  cboYCFilter.ItemIndex:=0;
 end;
 
 procedure TfrmMain.FormDestroy(Sender: TObject);

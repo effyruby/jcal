@@ -57,7 +57,7 @@ object frmMain: TfrmMain
     OnClick = Button2Click
   end
   object Button3: TButton
-    Left = 415
+    Left = 410
     Top = 78
     Width = 106
     Height = 25
