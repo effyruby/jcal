@@ -3,11 +3,14 @@ program JCal;
 uses
   Forms,
   MainForm in 'MainForm.pas' {frmMain},
-  Unit2 in 'Unit2.pas',
+  HebDateClass in 'HebDateClass.pas',
   Vcl.Themes,
   Vcl.Styles,
   AlephBet in 'AlephBet.pas',
-  Milon in 'Milon.pas';
+  Milon in 'Milon.pas',
+  JCalTypes in 'JCalTypes.pas',
+  JCalUtils in 'JCalUtils.pas',
+  JCalConstants in 'JCalConstants.pas';
 
 {$R *.RES}
 

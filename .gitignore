@@ -1,7 +1,4 @@
-Profiling/
-ModelSupport_WinPCVM/
-Types/.svn
-LibrarySupport/
+ProjectGroup*.*
 __history/
 
 *.bpg
@@ -25,12 +22,4 @@ cs.*
 *.sup
 *.eof
 *.dsk
-
-*.tvsconfig
-rslDebug*.*
-Crystal*.dcr
-CrystalViewer.*
-WinPCVMImporter.res
-*.identcache
-settings
 

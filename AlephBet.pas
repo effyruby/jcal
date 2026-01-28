@@ -33,7 +33,6 @@ const
   SHIN=#$05E9;
   TOF=#$05EA;
 
-
 implementation
 
 end.

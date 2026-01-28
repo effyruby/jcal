@@ -2,7 +2,7 @@ object frmMain: TfrmMain
   Left = 47
   Top = 115
   BorderStyle = bsDialog
-  Caption = 'frmMain'
+  Caption = 'JCal by RSL'
   ClientHeight = 494
   ClientWidth = 1081
   Color = clBtnFace
@@ -48,7 +48,7 @@ object frmMain: TfrmMain
     Text = '0'
   end
   object Button2: TButton
-    Left = 413
+    Left = 440
     Top = 47
     Width = 106
     Height = 25
@@ -57,7 +57,7 @@ object frmMain: TfrmMain
     OnClick = Button2Click
   end
   object Button3: TButton
-    Left = 410
+    Left = 437
     Top = 78
     Width = 106
     Height = 25
@@ -80,11 +80,10 @@ object frmMain: TfrmMain
     ParentBiDiMode = False
     ParentFont = False
     TabOrder = 3
-    Text = '#1498'
     StyleElements = [seFont, seBorder]
   end
   object Button5: TButton
-    Left = 417
+    Left = 444
     Top = 242
     Width = 106
     Height = 25
@@ -94,7 +93,7 @@ object frmMain: TfrmMain
     OnClick = Button5Click
   end
   object Button6: TButton
-    Left = 417
+    Left = 444
     Top = 273
     Width = 106
     Height = 25
@@ -104,7 +103,7 @@ object frmMain: TfrmMain
     OnClick = Button6Click
   end
   object seNoOfYears: TSpinEdit
-    Left = 498
+    Left = 525
     Top = 168
     Width = 43
     Height = 22
@@ -114,19 +113,20 @@ object frmMain: TfrmMain
     Value = 25
   end
   object TntPageControl1: TTntPageControl
-    Left = 550
+    Left = 572
     Top = 17
     Width = 473
     Height = 420
     ActivePage = TntTabSheet2
     TabOrder = 7
-    object TntTabSheet1: TTntTabSheet
-      Caption = 'TntTabSheet1'
-    end
     object TntTabSheet2: TTntTabSheet
-      Caption = 'TntTabSheet2'
+      Caption = 'Year Code (Stats)'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ListView1: TListView
-        Left = 6
+        Left = 9
         Top = 20
         Width = 215
         Height = 359
@@ -183,8 +183,19 @@ object frmMain: TfrmMain
         ViewStyle = vsReport
       end
     end
+    object TntTabSheet1: TTntTabSheet
+      Caption = 'TntTabSheet1'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+    end
     object tsLogging: TTntTabSheet
       Caption = 'tsLogging'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Memo2: TMemo
         Left = 0
         Top = 0
@@ -198,8 +209,8 @@ object frmMain: TfrmMain
     end
   end
   object Button7: TButton
-    Left = 417
-    Top = 110
+    Left = 437
+    Top = 109
     Width = 106
     Height = 25
     Caption = 'Tekufah'
@@ -207,7 +218,7 @@ object frmMain: TfrmMain
     OnClick = Button7Click
   end
   object Button8: TButton
-    Left = 417
+    Left = 444
     Top = 166
     Width = 76
     Height = 25
@@ -218,7 +229,7 @@ object frmMain: TfrmMain
   object lvGeneral: TListView
     Left = 8
     Top = 66
-    Width = 396
+    Width = 423
     Height = 420
     Columns = <
       item
@@ -231,7 +242,7 @@ object frmMain: TfrmMain
         Width = 100
       end
       item
-        Width = 80
+        Width = 120
       end>
     ReadOnly = True
     RowSelect = True
@@ -239,7 +250,7 @@ object frmMain: TfrmMain
     ViewStyle = vsReport
   end
   object Button4: TButton
-    Left = 550
+    Left = 576
     Top = 461
     Width = 469
     Height = 25
@@ -257,13 +268,14 @@ object frmMain: TfrmMain
     TabOrder = 12
   end
   object cboYCFilter: TComboBox
-    Left = 176
+    Left = 178
     Top = 39
     Width = 73
     Height = 21
-    DropDownCount = 25
+    Style = csDropDownList
+    DropDownCount = 30
     TabOrder = 13
-    Text = 'cboYCFilter'
+    OnChange = cboYCFilterChange
   end
   object chkExcludeYC: TCheckBox
     Left = 279
@@ -272,6 +284,27 @@ object frmMain: TfrmMain
     Height = 17
     Caption = 'Exclude Code'
     TabOrder = 14
+  end
+  object cboYearToYear: TComboBox
+    Left = 279
+    Top = 12
+    Width = 137
+    Height = 21
+    Style = csDropDownList
+    DropDownCount = 30
+    TabOrder = 15
+    OnChange = cboYearToYearChange
+    Items.Strings = (
+      ''
+      'Monday->Monday'
+      'Monday->Thursday'
+      'Monday->Shabbos'
+      'Tuesday->Monday'
+      'Tuesday->Shabbos'
+      'Thursday->Monday'
+      'Shabbos->Tuesday'
+      'Shabbos->Thursday'
+      'Shabbos->Shabbos')
   end
   object FDConnection1: TFDConnection
     Params.Strings = (

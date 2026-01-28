@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2026/01/27 14:39:20.000.292,=C:\Users\Ephraim\Documents\Embarcadero\Studio\Projects\Unit82.pas</Transaction>
+    <Transaction>2026/01/27 14:40:42.000.741,C:\PCVM\Dev-WC\Diary\Tests\Tes1.pas=C:\Users\Ephraim\Documents\Embarcadero\Studio\Projects\Unit82.pas</Transaction>
+    <Transaction>2026/01/27 14:40:45.000.218,C:\PCVM\Dev-WC\Diary\Tests\Project77.dproj=C:\Users\Ephraim\Documents\Embarcadero\Studio\Projects\Project77.dproj</Transaction>
+    <Transaction>2026/01/27 18:21:49.000.968,=C:\PCVM\Dev-WC\Diary\Tests\Unit1.pas</Transaction>
+    <Transaction>2026/01/27 18:22:18.000.904,C:\PCVM\Dev-WC\Diary\YekufahClass.pas=C:\PCVM\Dev-WC\Diary\Tests\Unit1.pas</Transaction>
+    <Transaction>2026/01/27 18:22:33.000.420,C:\PCVM\Dev-WC\Diary\TekufahClass.pas=C:\PCVM\Dev-WC\Diary\YekufahClass.pas</Transaction>
+    <Transaction>2026/01/27 19:48:10.000.226,C:\PCVM\Dev-WC\Diary\Tests\TesTekufahClass.pas=C:\PCVM\Dev-WC\Diary\Tests\Tes1.pas</Transaction>
+    <Transaction>2026/01/28 07:41:30.116,=C:\PCVM\Dev-WC\Diary\Tests\Unit1.pas</Transaction>
+    <Transaction>2026/01/28 07:45:50.873,C:\PCVM\Dev-WC\Diary\HebTearClass.pas=C:\PCVM\Dev-WC\Diary\Tests\Unit1.pas</Transaction>
+    <Transaction>2026/01/28 07:46:08.781,C:\PCVM\Dev-WC\Diary\HebYearClass.pas=C:\PCVM\Dev-WC\Diary\HebTearClass.pas</Transaction>
+    <Transaction>2026/01/28 07:51:07.225,=C:\PCVM\Dev-WC\Diary\Tests\Unit1.pas</Transaction>
+    <Transaction>2026/01/28 07:53:00.547,C:\PCVM\Dev-WC\Diary\DHPRecord.pas=C:\PCVM\Dev-WC\Diary\Tests\Unit1.pas</Transaction>
+    <Transaction>2026/01/28 07:55:31.281,=C:\PCVM\Dev-WC\Diary\Tests\Unit1.pas</Transaction>
+    <Transaction>2026/01/28 07:56:07.950,C:\PCVM\Dev-WC\Diary\Tests\YearCodeRecord.pas=C:\PCVM\Dev-WC\Diary\Tests\Unit1.pas</Transaction>
+    <Transaction>2026/01/28 07:58:29.008,C:\PCVM\Dev-WC\Diary\YearCodeRecord.pas=C:\PCVM\Dev-WC\Diary\Tests\YearCodeRecord.pas</Transaction>
+  </Transactions>
+</BorlandProject>
