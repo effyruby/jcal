@@ -10,7 +10,8 @@ uses
   Milon in 'Milon.pas',
   JCalTypes in 'JCalTypes.pas',
   JCalUtils in 'JCalUtils.pas',
-  JCalConstants in 'JCalConstants.pas';
+  JCalConstants in 'JCalConstants.pas',
+  FestivalsRecord in 'FestivalsRecord.pas';
 
 {$R *.RES}
 

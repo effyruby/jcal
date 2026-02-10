@@ -2,7 +2,7 @@ unit YearCodeRecord;
 
 interface
 
-uses JCalTypes,
+uses  JCalTypes,
       AlephBet;
 
 type

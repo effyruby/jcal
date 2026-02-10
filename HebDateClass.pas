@@ -5,8 +5,6 @@ unit HebDateClass;
 interface
 
 uses
-//     ALEPHBET,
-//     MILON,
      HebYearClass,
      JCalTypes,
      CodeSiteLogging;
@@ -73,6 +71,9 @@ type
     function AddDays(NDays: Integer): THebDate;
     function AddMonths(NMonths: Integer): THebDate;
     function AddYears(NYears: Integer): THebDate;
+
+    function Greg2Hebb(ADate: TDate): Boolean;
+    function HebToGreg(GDate: TDate): Boolean;
 
     Constructor Create(AYear, AMonth, ADay: Cardinal);
     Destructor Destroy; Override;
@@ -1051,6 +1052,16 @@ destructor THebDate.Destroy;
 begin
   HebYear.Free;
   inherited;
+end;
+
+function THebDate.Greg2Hebb(ADate: TDate): Boolean;
+begin
+
+end;
+
+function THebDate.HebToGreg(GDate: TDate): Boolean;
+begin
+
 end;
 
 function THebDate.Validate: Boolean;

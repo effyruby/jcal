@@ -27,7 +27,8 @@ type
 
     function SubBaseTekufa(HDate: TDHP; RoundToWeek: Boolean): TDHP;
 
-    public
+  public
+    RoshHashonog: TDate;
     DaysInMonth: TArray<Cardinal>;
     YearISLeapYear: Boolean;
     MonthsInYear: Integer;

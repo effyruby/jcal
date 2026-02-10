@@ -20,6 +20,7 @@ uses
   FireDAC.Phys.SQLite,
   FireDAC.Phys.SQLiteDef,
   FireDAC.Stan.ExprFuncs,
+  FestivalsRecord,
   HebYearClass,
   JCalTypes,
   JCalConstants,
@@ -71,6 +72,7 @@ type
     Label2: TLabel;
     chkExcludeYC: TCheckBox;
     cboYearToYear: TComboBox;
+    Button1: TButton;
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -83,6 +85,7 @@ type
     procedure Memo1DblClick(Sender: TObject);
     procedure cboYCFilterChange(Sender: TObject);
     procedure cboYearToYearChange(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     YearCodeArray: TArray<String>;
@@ -104,6 +107,8 @@ type
 
   public
     { Public declarations }
+    function CreateHebYearInstance(AYear: Integer; ARoshHasshonoj: TDate): THebYear;
+
 //    function CalTevesTekufah(TekufaYear: Integer;
 //      Tekufah: TTekufah): Boolean;
     // function CalNissanTekufah(TekufaYear: Integer): TTekufah;
@@ -137,6 +142,23 @@ begin
   li.SubItems.Add(AText2);
 end;
 
+procedure TfrmMain.Button1Click(Sender: TObject);
+var
+  Festivals: TFestivals;
+  HebYear: THebYear;
+begin
+  HebYear:=CreateHebYearInstance(5786, StrToDate('23/09/2025'));
+  try
+    Festivals.RoshHashonoh:=StrToDate('23/09/2025');
+    Festivals.IsLeapYear:=HebYear.YearISLeapYear;
+    Festivals.DaysInMonths:=HebYear.DaysInMonth;
+    Festivals.LoadFestivalDates;
+  finally
+    HebYear.Free;
+  end;
+
+end;
+
 procedure TfrmMain.Button2Click(Sender: TObject);
 var
   k: Integer;
@@ -163,9 +185,17 @@ begin
   end;
 end;
 
+function TfrmMain.CreateHebYearInstance(AYear: Integer; ARoshHasshonoj: TDate): THebYear;
+begin
+  result:=THebYear.Create;
+  result.HYear := AYear;
+  result.HMonth := 1;
+  result.CalcNextYearsNewYearsDay;
+end;
+
 procedure TfrmMain.Button3Click(Sender: TObject);
 var
-  Molad: TDHP;
+//  Molad: TDHP;
   HebYear: THebYear;
   SaveYearCode: String;
 begin

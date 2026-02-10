@@ -121,10 +121,6 @@ object frmMain: TfrmMain
     TabOrder = 7
     object TntTabSheet2: TTntTabSheet
       Caption = 'Year Code (Stats)'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object ListView1: TListView
         Left = 9
         Top = 20
@@ -185,17 +181,9 @@ object frmMain: TfrmMain
     end
     object TntTabSheet1: TTntTabSheet
       Caption = 'TntTabSheet1'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tsLogging: TTntTabSheet
       Caption = 'tsLogging'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Memo2: TMemo
         Left = 0
         Top = 0
@@ -305,6 +293,15 @@ object frmMain: TfrmMain
       'Shabbos->Tuesday'
       'Shabbos->Thursday'
       'Shabbos->Shabbos')
+  end
+  object Button1: TButton
+    Left = 444
+    Top = 211
+    Width = 106
+    Height = 25
+    Caption = 'Tekufah'
+    TabOrder = 16
+    OnClick = Button1Click
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
